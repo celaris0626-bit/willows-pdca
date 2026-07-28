@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e4d6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABmiSURBVHhe7Z2JWxRX1ofnX5nJMsmYREFRBNfs68RsM5PkS0Z04gbNKuAuAgJNQ7ODgCIoKgKuCAqoICKKuIErgkoQBZF933/fc091002LikYNXM7LUw/dXbeqC/qtW7fOPff2X8AwEvEX0xcYZizDQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIzUsFCM1LBQjNSwUIbMTAwQMuTGBjof2qZF8GreA8ZYaEJU3n60d76EHUP7qCuphztLTXo6+0cWoQ2Md3ujzMgfoxkrq2+iVOZcUhP8MDhHZ4oLT42pDQzlHEttJBHT3dnK+7cKMTZnGScOBRNy9HUYKREuyB8zReI9piH1E0uOJ21FU31d3XbvwyUvT6ouobkKEcEOk2Hv+0kBNiZQ21rBt9lk5CXscl0I0bHuBN6AP1DVKyuvI7cjFgcSQlEUW4KKm6eQ3tro9EW/bh1LR+bN/4LG397G/7LJiJ0xQcoLtir7G8EzZRnQTRpLhUcRKTHd0jQzEfk+i8Q4myFcLc5CHWbjRAXK/ipLFBZfs50U2Z8CS2kEzIrVJQWIj1xIw4leuNG8Qn09nQNKW1KV2cTtgfMh9ZhKkIcLaG2tUBpca6ykoQeidRPL9Pd2Y68zAQ8rCmn54215Yhc+yVCnK0R5jqbpFbbTkR2aoDppsx4EJpUM6pBH9y7gYwdvtgbtxK3rxUMKUuNEKpxTV7VvVBZfhZap+kIc52FIPspiPP9Ed3dbUMLP5bHy2x8fAMDfUPWCVKjHRCgskC46ywSOlA1GalR9qbFmLErtF6ARyUxuDF0XUtDDTJTApES64abxceHrBspQrbtAb8gyHEawlxnQmM/FXdKT5sWGxbRlNAfk2iD37x4HDeLc9HV1a4T2vRvMTzfv9kVgaopCHObhTC3mQi0n4LkCLtHyjFjVmiB8Qc5gF6qKQ1NCgP9KDyWiO2BS1CUk4KBgV561bTmHil7NjmSUOFus6C2NUfeoSjTIsNgeJ9zJ5MR6v4+1MvMsCvKGQ11VUqJR45FeS5OosRAGwQ5TCWZQ91mQWM3CenbN+jWm2w2zhmbQus+xMb6KpzJjsPO4N+w2fM77AxciBP7Q9DccI/WV1dexo5QexxIWIfWxvuGzY1qy2flwGY3BNhZkFwBqsnYF+tqWsSIoTeMeRmR8FtmBt9FE5Cd7GsoNYyV+pfE3xK++hOEuFhTk0PU0mrbSbhwco9STjk1h248jhljQg8MftKX8vci2O0DrJ//V/jbTUao+4f023vBG4j1+QF56VHYGW6Pa+ezTHfyh9izyWHw8h/oMAXJYfpLvzH62lV/xRhA9h4N1HbmCBFt8BUfoqm+csgWpuglv34hC/6qySRzuKsS5Qh1/wBNdUroUFfa6PH4ZowJrVBcsA++i9+B1sESuQfDUV15Bc3ND/GgqhQpkSpsXPAmAuwtUFd9k8pTHTZMLfjs9CFROx9ax6kIcxdCWyA10tG0kA7d+/X3I32HF/yWTkSY2wyKJWfuMtTOTyN9+3oE2poh3G02wtxFhMMcGTs9ad2L+ItkY8wIra/t7ldcgdbZmmrjK2cPDClT/+AODu3wxO7Q37BxyTs4kRY2ZP1zozOnu6sJsV7zEOQ8ndrQorMjfds6k6KimaEca39/N9IS1kGzdJIScnOdgWAXazyoujFkm8fR3taIqHVfIth5unJDuNwaQS6z8fB+qWlRRscYEFpnk+5XdrI/vBa8hqTwpUNKlV05ifigxai9V46mhgpo7C2xze8n9Pf3DCn3POhr97rqWwgRnRuuM+jmTL1sEk5nbjEpq4TdhNhCZt9l7yLcbSbVsKLpsDfWaUj54dDXvMWn90OzzJxqdrG9eul7yE7VmJRmjBkDQgvER6zUekd2eGKDzRvI2Rc0uLbk7CFs9behGlrQ09uJLV4/IHLlx1TL/VH0Ql8ryoTGzpxqWxGLDrC3xJ3rStjOuBtdkJ7oCd/FisxUu7rOglo1FeVXdJ0xT6G/rwfbNL9Cay+iG7MQ5DgVUR7zKMdEgRscwzGGhFZqvvxDkdgw/zUc26P0lF08mYIYn5/QXKe/yRpAX18X4jb+iEAnSzysvmXYxR/kcNJG+NuZkWDBzpaI2fANujqadG10fYdIL9LiVyPAwRJx3v+k6IQi5DTE+/1Mx/Z4aE/0qPjMfqhtJ+tOhhnwt52CGxezjcoxwzFGhDa0oUsvZcFv8T+wK+R/uJCXhKiNP6D5oSKzvkx1ZTGCXGZArTJDaclR/R4G9zVyDNt0djQiev3XJLII2YnQWVaKWimlK9bX14M9MS7wtZ2Ka+fTsM3/Z115JdR2JitucH/Doxx/d2czNnt+C63jNIS7z6YbyiOJuhtBeq/n+VvGB2NGaD0iXBW+4iME2VtQ+KutSYk5G+hHcqQ9dX6I8JroZRM8f7zWUGP62U2mJoS4uQtwmo57FVcHS4n00t0RdvBePBFV5RdQdfsC/MUxus5EKIXaRKjOONQ2HMp7nTwUSSeAkFl0cyeof6VcEirxQqI18jJmhDb+IJMj7aBRmSHC/X0UZG1GQ10lOtqbqSMldZMjvBb+AxrVJAQ5TUOAw1RcOXtI2cdgW/zZpBjo70Fi4EJoHSxIsgCVOfbGuAyu7+luR1LYIvgsNcedG2fotfRtHlCrzCm8J9rdB+JWGvY3+OhRaquuUyQjxNUKwc7TEOL+Eeru68OPT9qSEYw5oe//fhnB7nMR7DSdIg4i0qB2nIEgt4+hVlkifM2XOLxrIw7v8kWs1/fwW/IONPbTcP3CYcO+Riy1Uqbscg78VUp3t4hwBNhb4W75eVrX092BnUFLsNHWDBW6vI72loeIXPs5pX2Km0GNagrKLutvBvVXCuMrhvJbNJl2h9lRD2SoqzX8VdNw46LSMaQcM/M0xozQgsbaOwhy+wj7YpwRvf5LBDlZItbzG1zK30X5yRU3TqO7u3WwfGdHCy6eSkHkms+wcdEE5B+OfmqaqCniZi8pdJEuf2MOAmzNsX+zUtuKZsaukGXwtZ2Mu2WG/OQrZ9Pgr7uhE1eJeL8f0dfXbbTX4SnK3UkdJ6GuM6F1tKbnzLMxBoRWaq/eng7EeH+POL9fKOJxNFWLDb/+DUd2+z1annrIDTVaS2M1tgcupAT9ePXPKCk8hJ6ejiFbPY6y4myKH4u2sOh2Dl/1CdqaayislhylQrDrbNSadHSkiJEmuhpdrZqMgiNRdDw9Xc3o6mhAe0st5Wg0PLiDh/fLUF1VihuXsqhLW7S3xdUnwfdHlF/NpUT+qopi1N67gab639Hd0YB+ipS83Bpb6SDSXUdoHKX+qjaSK9ufxxgQWjCAA/Gr4Gs3HQ21t+mVrk4RdfgKO4JtcOJgJNIS1mJ3hD2ivb5H6UUlskHNFF1TpaujDpvWf4YA1STqZdzq9zPy06Nx99YldLTUo63pId1wilj2w/s3UXP3KqpuXaSkftHFHeomas1p2Bm8EMWnD5C0PksmYE+ELfIzopGV7IfDOz2xP84VYW7v0wkQRp0w1ti68d+I9/uVYuOxHt8iat1XiFj1KcLdP0SI2/vQLp+NQIfpCBMhPvc5dCKIvI0ABysEOlpB6zwDwa5zaRuRhLVN/SsSgxZhd4QK+2KXI33bWmTu9sHxfcH0N53JTsCFvGRcPXsIN0tycOdGAapun8eDu1dRX3MLTXVVaG+pQ1dnC3p7OwDKQBzdoo6UMSH0udwkrP3v33DpZDI9H+jvw9ljOxC28iPEeH6DxKDfsMljHnwWT4DvorewI2TJIzXY5TMHEewyU4k6LJ9BN2rev70FP1tzRKz4CBHuHyHYdQ6CXGYhyGUmSRTobIVgUStTHvJsCteF0LZmCBI3iCtmK93wtma0P9EVHiCaJq5Kz6CQkqR2saKmR5CzJXVjB7tMR6iLNUJdZpDwImoi2triBlLJeVa2U2LQIqqiW5bPoNpbnFiBjhYIcJiMAPvJ1Ob2tzWHRhzHMjP4i8XOnNruGpUoNw2BTlYUygxdPgdhKz5A1JrPEL3uKwoPbvX5Edv8bbAjeDFVCvtiXJEWvxZHksRJEoJTR+JwLjcZJYUZKC3Jw51S02Fqo4dRL3R9dTn8bC2wK1SRVMicFr8K62zexMn0TejtVtrEoo1aUrAHoS5z6EYxK9kHjXWVaGl5gILMGAQ6WUNrPwUau8kIcX0fMV7fIFG7EDuDFmGr+mfEen9PA2EjV39OJ0rEqg8RKjLcdGIFOlsi3G0ugpdbU9ackJjEERKR0CKqMh3h7mLsn9I7KCQMcbKkZoToYAldLhZxUgmBxe85dJKIhU4ad12v4uCivE4nB9XaYhFSWiN4uRDUkk4UraMFXUU09lPgrzKHv0o5Lv9lk2iALcmuEmVEeSuELBfv9QE2rfmcOoe2+v4HiQH/RVLYEoqji6vd4SQf5OwPRUFmHM7n7cbVs+koK8lBRVkRKm9dQltz/R9Kw31ZjEqhB2MA/b3YHWYL3yXvoebuNVp3MX8v1s9/Dfu2GMJmxty4cIzkFeJGrPgEUWs+h8beguSL8/4PzuXsRG31LbrcQp93MdCN3t52ivWK9m1rSx1OpAVD4zAFoe6zoHWYjqOpPkhQ/4QQ17k4nRWLoqMJyD8UheN7g5CV5If0RC/sDLJBsLMV5XmQtO5zEev1b0Sv/yci1nxKseiQ5XMR5DwDIW5zKAQopBZpqGo7M4o9CwE1thPpt8jMEz2TGpWoiS1oBLi4goi2duTqTxG9YR7ifP+D7YELsDtsKfbGuuDQ9nXITvFHXloECrPjcOHEblw7ewhlV3JQWV6Emsqr1HZvabyPjvY69Pa2ieERpv/GETHccLE/m1ErtKDkzD6sm/83HNnhQc9FT1yC+hf4LH4HZSXGYbChceojuzdSjRnqPAshy62hUZkjY4cH9cCNhK7ONsR4/gvBTpY0hjA1ahmOJHkg0HkWbl87aVp8kNwDWvjbTaKaVIh4KHE9jTnsaGsggUT7/8G966i9X47CrM20bz/biTgYvwKXTu1B0bEEFGREI3dvMPLSwlF4LB6X8lNw7VwGbl7ORWVZEbXtxX5am+7TDWZvT/tgWsCLQP9vVG4/dN1RhluRUc8oFFr5z4l5MmI95yHA2RoND5QbQXGnL8JZ4pL5UJfrPNwlr+rWOaqlRbs00MkCcb4/PzJRzKOdFHRfT4+O7QuBetlEahZErf4YOwN/gUZljVuXTzxmW6C7oxkxnt9SO1kkL4ka9XHjDVubqhHj9S28F/1DF6V5cUKODNPj118Txz6jTGhDLrHo3fOc/yZFDvRcK8qgsXihKz9EY93vRtsNRdzBR679gm6+RIfIzWJ9PseTUD5QMUhARB1Eu1fJQZ4Bjb0V5ZAMjz7H5DjdhIlttE7TsNXvJ/QOnkQGYRrrf0fMhnnwsnkbuWmhg3vhLu0Xw6gTWv/B79/iDs+Fb6PixklK6k+NdqHOlNDlVtA6WaPqzkWjbYy3BzpaGxC17guqZUVeh6FOfZo0A0iNdqYmCvUKOluTzNfPH1HWUlx2+H2IabpE9CPcXeRJm+F01mZlhdG0CM1N9xHr9S08bd5CQbYhj5plfnGMMqEVurvasNnrBwS5WGF/nBsi1ovow6dU24a4z6A7+ewUfaJ7P3ULU3tPV7tX3ixEgKMlAuymoqJUN/fGE5zRr7p6PoN66kS4TdTuGodpuFKUMaSMMXoRRRs5UowsEUlIIgfDdTbqa5Rmkr5Mc30VYjd8C69FE3AhP0W/h8fsmXleRqXQomcvcvUnFJnYrl2Ahtpb6O3twqmszdDYTaGwlYj/lhXnmG5KiUQpEctoXKHIfhusU5/iTXtrLaLWf4Vgp2kIdbaiOTdKTu83LWaCslMayGorRpaIxKUpSI1WRqXo31JM+Bi55guo7UTzxzDZItfML55RKXRXRyNCVnwIjbM1Gk1GR4teMf8lZlSDitBXXvom6hpuaayhmY1EJp7fbxMQ7DYXNXdLhmw7HHqpjqaoKWxGnS72FijJ32dcyujxoxyMX0tRFSVP2hyXC9MG19XcvYyg5bMR5DYXVXeKh2zHvHhGndCKOgM0rKripm54k1Fzoqe7DbsjbeG7+D0EO06jHjGt8yxErf4M/g5TsGHBa5Rld+/2yOUpu5JLw6nCnKwoqagoJ1FZoQtdPQlxAxq1WtyAWiLEeTrdjIo2vODW9Tz4qSyp3dzwsEK3xZP3x/wxRp/QJhLpk2QUDFIf3RNEvV3iUq9e9i7VrrHrv0ZeWiTa2vTj7p5Oa1MNNq39Alr7ydScOXM0YXDd02QWXCk8RD2HSux5IjJ2KjManc9Jgueid5EcYYtOXXI+XtFk6eOZUSe0gcfcMBkJ0VBfhavnMnE+dxfKr5xAZ7tOHJNyphgizgPYu9kV/kvfhdpuMiX1GBUaEftoJiWRjSdi3pa4emYPspP94LHgLRzfqx08CTmf+dUwioUWjNCqZ8KgszgRxHg9MT2XyJh7Mo8ei+j9C1/9GWXJifyNqJUfImLVx9A4WOFqYfpgOeNUVublMsqFfjaeUCkb0BWqqbwBrfNM+Cx+z2RCmqftxHDlEDM4iTZ3BM3bPJNODpHoJKbsNS7PzYxXh1RCPw29WCK/IkH9MzwXvIlj+0SzQM/Ts8eMh2+JiEqAwxRK6fRXWSA7NRC9PUrvoL5Jw7xapBC6v38kl3Td8AuA5pZb/+tfcXiHcgOnrBb5FE8XUN8Wrq64TKmYGruJCF/5Ma6dH0n3OvOyGSdCG5oJF/P3YMP8N5Acboe+XmWc38gHzRpIjXKE5/zXsU1rQ8OoBNy0+PORQugnYSzr76UF1GaOXPMVWpseDJZ4FkQe9f74lfBZMhEn0qKeedAt83KRXmi9sA21FTRiPGrNV6i9e11Z8xw16q3SQiRol6CyvHDwtefZD/NyGAdCCwZQc+8mxax7uluUV57769gM2yidPs+zD+ZlMW6EfvS58Wum64fDtIzxPvSPX+TCPA/jROiRMVY1GqvH/TIYc0LTJf4Vf4Lim7P6+jrQ1dmMzvYGdLU30tKpW0b6XP/a454PX76BBvCaTsvw8hmbV4oxI7TSVhUfaj/FjIVkYlS4mL5AfOA93a3o7mxCZ1sD2pofoLlemZlIjEO8/3sJjXi+c+0UyoqP4WpROkoK9uLiiSQUZifQ5Cw5+8OQlazG4URPHIxfhdQYZyRHqrAzdDG2Bdhgq/onxHp+R1PqiukOXs3yNTZ5fI04v59oyoWk0CVIiVLR6O60hFU4stMT2an+yDkQhvyMGBRmb6NR3uJvE39j2aWjqLiWT7Mv3ftdzL50HfW1t9HUcBetzTXoaKujVN2erhb09LSht6+DZmUS/1fl6+/E/7kP/fT/HhtyjyGh+1FVcR0lRZk4n5eKU5lbkb03GGmJ3tizeRWSIhyxTbsIW3x/waYN3yFi9ecIWf4+AhzFPBoW8Fliho2L3oX3wrfhZfMmPG1eh+f812jydA/xeMHr8FrwBrwX/h0+C9+Cz6K34btkAtRL34FmmfjyeDOa10PMgaF1FL+NFgfd8rTn+tce99y4PD22oJn7xfuK9/e3nUiZhWICSr9Fb2Pj/96C98K36Lg9xWLzBjbYvA4Pm9eoF1Ss8/5tAnwWi3wVMQmOJbRiGgQxvcPaedjs/SO2axYgKUyFlBh3HNi2AZmpWpzMiEVRbjIuFx2hSWW6OpofO/RstDGGhBYz8/fQ1FViXrqezha6JIvhT2K2z7amGmW+uIcVNEJEfDFPdUUJqsqKcPv6KZRfzkHp+SO4XHiQZv0vOp6IgiNbaP6K43sCkLnLm75x6uDWldgb7UKjXXaFLMJ2jQ22+v6ELd4/0BwfYm67iNWfIEL/W/94JM+Ntx3uuXH5wdc/RsTKjxG19nPEeAgJ/4V49f9hh/Z/9D0zqZsccHCLO315UeYuHxzfE0jfciDm5Dh/YhdKTu/D9XOH6cp051o+/T/E/0Xkm9Q/uE1fLydGobc31+pq7CZ0d7XS9AhilJD4jhpD7Tz6pR4zQv85iPzlHpoCQVyWxQcvxgaKE+eVLfVVNOeeaEaJ9nRPVyv6aTT5q576YGwwroRW7id1SfaDETIlnVSphUZ/DfQ4jI9+rDQPXgbjSmgF0w970Oxh1o0mTI9zNB/rn8c4FJqRGRaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakQoWmpEKFpqRChaakYr/B8s50JKxL+GqAAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>WILLOW'S 棚卸しアプリ</title>
+<style>
+  :root {
+    --navy-900: #12293b; --navy-700: #1e4d6b; --navy-600: #2c6289;
+    --teal-600: #3f7d69; --teal-500: #4f9880;
+    --amber-600: #c98a3b; --red-600: #b8483f;
+    --paper-0: #f4f6f7; --paper-1: #ffffff; --paper-2: #e8edf0;
+    --ink-900: #1b2733; --ink-500: #5b6b78; --ink-300: #8b9aa5;
+    --line: #d8dee2; --line-strong: #c1cbd1; --focus: #2c6289;
+    --font-ui: system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --navy-900: #0c1c28; --navy-700: #4a86ab; --navy-600: #5f9bc0;
+      --teal-600: #5fa98f; --teal-500: #6fbfa2; --amber-600: #d9a35f; --red-600: #d3695f;
+      --paper-0: #101820; --paper-1: #17222c; --paper-2: #1e2b36;
+      --ink-900: #e7edf1; --ink-500: #9bacb8; --ink-300: #6d818d;
+      --line: #2a3944; --line-strong: #384955; --focus: #6fb3d9;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy-900: #0c1c28; --navy-700: #4a86ab; --navy-600: #5f9bc0;
+    --teal-600: #5fa98f; --teal-500: #6fbfa2; --amber-600: #d9a35f; --red-600: #d3695f;
+    --paper-0: #101820; --paper-1: #17222c; --paper-2: #1e2b36;
+    --ink-900: #e7edf1; --ink-500: #9bacb8; --ink-300: #6d818d;
+    --line: #2a3944; --line-strong: #384955; --focus: #6fb3d9;
+  }
+  :root[data-theme="light"] {
+    --navy-900: #12293b; --navy-700: #1e4d6b; --navy-600: #2c6289;
+    --teal-600: #3f7d69; --teal-500: #4f9880; --amber-600: #c98a3b; --red-600: #b8483f;
+    --paper-0: #f4f6f7; --paper-1: #ffffff; --paper-2: #e8edf0;
+    --ink-900: #1b2733; --ink-500: #5b6b78; --ink-300: #8b9aa5;
+    --line: #d8dee2; --line-strong: #c1cbd1; --focus: #2c6289;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: var(--font-ui); background: var(--paper-0); color: var(--ink-900); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+  button { font-family: inherit; touch-action: manipulation; }
+  input, textarea, select { font-family: inherit; color: inherit; }
+  /* iOS: inputs must be >=16px or Safari auto-zooms on focus */
+  input, textarea, select { font-size: 16px; }
+  .app-shell { max-width: 900px; margin: 0 auto; padding-bottom: 118px; }
+
+  .topbar { background: linear-gradient(180deg, var(--navy-900), var(--navy-700)); color: #eef4f8; padding: 14px 16px 12px; position: sticky; top: 0; z-index: 40; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+  .topbar-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand .name { font-size: 15px; font-weight: 700; }
+  .brand .sub { font-size: 11.5px; color: #b9cedd; }
+  .icon-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35); background: rgba(255,255,255,.08); color: #eef4f8; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex: none; }
+  .role-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: rgba(255,255,255,.10); border-radius: 10px; padding: 4px; margin-top: 12px; }
+  .role-switch button { border: none; background: transparent; color: #d7e4ec; padding: 10px 6px; border-radius: 7px; font-size: 12.5px; font-weight: 700; cursor: pointer; min-height: 40px; }
+  .role-switch button.active { background: var(--paper-1); color: var(--navy-900); }
+
+  main { padding: 14px 16px; }
+
+  .card { background: var(--paper-1); border: 1px solid var(--line); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+  .card-head { background: var(--paper-2); padding: 10px 13px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 12.5px; color: var(--navy-700); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .card-body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 12px; font-weight: 600; color: var(--ink-500); }
+  input[type=text], input[type=number], input[type=month], input[type=date], select, textarea {
+    border: 1px solid var(--line-strong); border-radius: 8px; padding: 10px 11px;
+    background: var(--paper-0); color: var(--ink-900); width: 100%; min-height: 42px;
+  }
+  textarea { min-height: 100px; font-family: var(--font-mono); font-size: 13px; resize: vertical; }
+
+  .btn { border: 1px solid var(--line-strong); background: var(--paper-1); color: var(--ink-900); padding: 10px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer; min-height: 40px; }
+  .btn:active { transform: scale(.98); }
+  .btn.primary { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+  .btn.navy { background: var(--navy-700); border-color: var(--navy-700); color: #fff; }
+  .btn.danger { color: var(--red-600); border-color: var(--red-600); background: transparent; }
+  .btn.ghost { background: transparent; border-color: transparent; color: var(--navy-700); }
+  .btn.sm { padding: 7px 11px; font-size: 12px; min-height: 34px; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .subtabs { display: flex; gap: 4px; background: var(--paper-2); border-radius: 9px; padding: 3px; margin-bottom: 10px; overflow-x: auto; }
+  .subtabs button { flex: 1; white-space: nowrap; border: none; background: transparent; padding: 9px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; color: var(--ink-500); cursor: pointer; min-height: 40px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+  .subtabs button.active { background: var(--paper-1); color: var(--navy-700); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .subtabs button .badge { font-size: 9.5px; color: var(--ink-300); font-variant-numeric: tabular-nums; }
+  .subtabs button.active .badge { color: var(--teal-600); }
+
+  .progress-line { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 0 2px; }
+  .progress-track { flex: 1; height: 6px; border-radius: 999px; background: var(--paper-2); overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--teal-600); border-radius: 999px; }
+  .progress-text { font-size: 11px; color: var(--ink-500); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .search-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .search-row input { flex: 1; }
+
+  .group-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; cursor: pointer; background: var(--paper-2); border-bottom: 1px solid var(--line); }
+  .group-head .lbl { font-size: 12.5px; font-weight: 700; color: var(--navy-700); letter-spacing: .02em; }
+  .group-head .meta { font-size: 10.5px; color: var(--ink-500); font-variant-numeric: tabular-nums; }
+
+  .item-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .item-row:last-child { border-bottom: none; }
+  .item-row.counted { background: color-mix(in srgb, var(--teal-600) 6%, transparent); }
+  .item-info { flex: 1; min-width: 0; }
+  .item-info .nm { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item-info .meta { font-size: 10.5px; color: var(--ink-500); font-variant-numeric: tabular-nums; margin-top: 1px; }
+  .stepper { display: flex; align-items: center; gap: 4px; flex: none; }
+  .stepper button { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--paper-0); font-size: 17px; font-weight: 700; cursor: pointer; color: var(--navy-700); flex: none; }
+  .stepper button:active { background: var(--paper-2); }
+  .stepper input { width: 52px; text-align: center; padding: 6px 2px; font-variant-numeric: tabular-nums; min-height: 36px; }
+  .item-value { width: 68px; text-align: right; font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-900); flex: none; }
+
+  .totalbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--paper-1); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -4px 14px rgba(0,0,0,.08); }
+  .totalbar .row1 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .totalbar .grand { font-size: 18px; font-weight: 800; color: var(--navy-700); font-variant-numeric: tabular-nums; }
+  .totalbar .lbl { font-size: 11px; color: var(--ink-500); }
+
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; }
+  .chip.gray { background: var(--paper-2); color: var(--ink-500); }
+  .chip.teal { background: color-mix(in srgb, var(--teal-600) 18%, transparent); color: var(--teal-600); }
+  .chip.amber { background: color-mix(in srgb, var(--amber-600) 18%, transparent); color: var(--amber-600); }
+
+  .master-row { display: flex; align-items: center; gap: 6px; padding: 9px 6px; border-bottom: 1px solid var(--line); }
+  .master-row.header-row { background: color-mix(in srgb, var(--amber-600) 12%, transparent); border-radius: 6px; }
+  .master-row input[type=text] { font-size: 13px; padding: 8px 9px; min-height: 38px; }
+  .master-row .w-name { flex: 2; min-width: 0; }
+  .master-row .w-vol { flex: 1; min-width: 0; max-width: 70px; }
+  .master-row .w-price { flex: 1; min-width: 0; max-width: 80px; }
+  .master-row select { font-size: 11.5px; padding: 6px 4px; min-height: 38px; max-width: 84px; }
+  .master-actions { display: flex; gap: 4px; flex-wrap: wrap; }
+
+  .hint { font-size: 11.5px; color: var(--ink-300); line-height: 1.6; }
+  .empty-note { color: var(--ink-300); font-size: 13px; padding: 12px 4px; }
+  .toast { position: fixed; bottom: 96px; left: 50%; transform: translateX(-50%); z-index: 70; background: var(--navy-900); color: #eef4f8; padding: 10px 18px; border-radius: 999px; font-size: 13px; box-shadow: 0 4px 14px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .25s; max-width: 88vw; text-align: center; }
+  .toast.show { opacity: 1; }
+  a { color: var(--navy-600); }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="app-shell">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <div class="name">WILLOW'S 棚卸しアプリ</div>
+        <div class="sub" id="subline">在庫数を数えて入力するだけ</div>
+      </div>
+      <button class="icon-btn" id="helpBtn">?</button>
+    </div>
+    <div class="role-switch">
+      <button id="tabCount">棚卸し入力</button>
+      <button id="tabMaster">商品マスタ</button>
+      <button id="tabHistory">履歴</button>
+    </div>
+  </div>
+  <main id="main"></main>
+</div>
+<div id="modalLayer"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+  var STORE_KEY = "willows_inv_v2";
+  var UI_KEY = "willows_inv_ui_v2";
+  var OLD_STORE_KEY = "willows_inv_v1";
+
+  function defaultData() {
+    return {
+      categories: [
+        { id: "cat1", name: "①一般在庫" },
+        { id: "cat2", name: "②オージュア(業務用)" },
+        { id: "cat3", name: "③オージュア(店販)" }
+      ],
+      items: [],
+      months: {}
+    };
+  }
+
+  function migrateFromV1() {
+    try {
+      var raw = localStorage.getItem(OLD_STORE_KEY);
+      if (!raw) return null;
+      var old = JSON.parse(raw);
+      var d = defaultData();
+      d.categories = old.categories && old.categories.length ? old.categories : d.categories;
+      d.months = old.months || {};
+      // group by categoryId preserving original order, inserting a header item whenever the old "group" value changes
+      var byCat = {};
+      (old.items || []).forEach(function (it) { (byCat[it.categoryId] = byCat[it.categoryId] || []).push(it); });
+      var newItems = [];
+      Object.keys(byCat).forEach(function (catId) {
+        var lastGroup = undefined;
+        byCat[catId].forEach(function (it) {
+          var g = it.group || null;
+          if (g !== lastGroup && g) {
+            newItems.push({ id: "hdr" + Math.random().toString(36).slice(2), categoryId: catId, type: "header", name: g, volume: "", unitPrice: 0 });
+          }
+          newItems.push({ id: it.id, categoryId: catId, type: "item", name: it.name, volume: it.volume || "", unitPrice: it.unitPrice || 0 });
+          lastGroup = g;
+        });
+      });
+      d.items = newItems;
+      return d;
+    } catch (e) { return null; }
+  }
+
+  function loadData() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var d = JSON.parse(raw);
+        if (!d.categories) d.categories = defaultData().categories;
+        if (!d.items) d.items = [];
+        if (!d.months) d.months = {};
+        return d;
+      }
+      var migrated = migrateFromV1();
+      if (migrated) return migrated;
+      return defaultData();
+    } catch (e) { return defaultData(); }
+  }
+  function saveData() { localStorage.setItem(STORE_KEY, JSON.stringify(DATA)); }
+  function loadUI() { try { return JSON.parse(localStorage.getItem(UI_KEY)) || {}; } catch (e) { return {}; } }
+  function saveUI() { localStorage.setItem(UI_KEY, JSON.stringify(UI)); }
+
+  var DATA = loadData();
+  var UI = loadUI();
+  if (!UI.tab) UI.tab = "count";
+  if (!UI.countCat) UI.countCat = DATA.categories[0] ? DATA.categories[0].id : null;
+  if (!UI.masterCat) UI.masterCat = DATA.categories[0] ? DATA.categories[0].id : null;
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (attrs[k] === null || attrs[k] === undefined || attrs[k] === false) return;
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else if (k.slice(0, 2) === "on") e.addEventListener(k.slice(2), attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c !== null && c !== undefined) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function uid() { return "id" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function yen(n) { return "¥" + Math.round(n || 0).toLocaleString("ja-JP"); }
+  function currentMonth() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }
+  function monthLabel(m) { if (!m) return ""; var p = m.split("-"); return p[0] + "年" + parseInt(p[1], 10) + "月"; }
+  function toast(msg) { var t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove("show"); }, 2600); }
+  function debounce(fn, ms) { var t; return function () { var a = arguments; clearTimeout(t); t = setTimeout(function () { fn.apply(null, a); }, ms); }; }
+
+  function ensureMonth(m) { if (!DATA.months[m]) DATA.months[m] = { counts: {}, finalizedAt: null }; return DATA.months[m]; }
+  function catItemsOrdered(catId) { return DATA.items.filter(function (it) { return it.categoryId === catId; }); }
+  function countableItems(catId) { return catItemsOrdered(catId).filter(function (it) { return it.type !== "header"; }); }
+  function itemValue(item, qty) { return (item.unitPrice || 0) * (qty || 0); }
+  function monthCategoryTotal(m, catId) { var rec = ensureMonth(m); return countableItems(catId).reduce(function (s, it) { return s + itemValue(it, rec.counts[it.id] || 0); }, 0); }
+  function monthGrandTotal(m) { return DATA.categories.reduce(function (s, c) { return s + monthCategoryTotal(m, c.id); }, 0); }
+  function categoryProgress(m, catId) {
+    var rec = ensureMonth(m); var items = countableItems(catId);
+    var counted = items.filter(function (it) { return (rec.counts[it.id] || 0) > 0; }).length;
+    return { counted: counted, total: items.length };
+  }
+
+  function offerDownload(filename, textContent, mime) {
+    try {
+      var blob = new Blob([textContent], { type: mime || "text/csv;charset=utf-8" });
+      var url = URL.createObjectURL(blob);
+      var a = el("a", { href: url, download: filename, style: "display:none" });
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      toast("書き出しました：" + filename);
+    } catch (e) { toast("書き出しに失敗しました"); }
+  }
+  function csvEscape(s) { s = String(s == null ? "" : s); if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"'; return s; }
+
+  /* ---------------- Modal helpers ---------------- */
+  function closeModal() { $("#modalLayer").innerHTML = ""; }
+  function openModal(contentEl) {
+    var layer = $("#modalLayer"); layer.innerHTML = "";
+    var backdrop = el("div", { style: "position:fixed;inset:0;background:rgba(10,18,24,.55);display:flex;align-items:flex-end;justify-content:center;z-index:60", onclick: function (e) { if (e.target === backdrop) closeModal(); } });
+    var modal = el("div", { style: "background:var(--paper-1);border-radius:16px 16px 0 0;max-width:520px;width:100%;max-height:88vh;overflow-y:auto;padding:20px 20px calc(20px + env(safe-area-inset-bottom));border:1px solid var(--line);border-bottom:none" }, [contentEl]);
+    backdrop.appendChild(modal); layer.appendChild(backdrop);
+  }
+  function confirmModal(message, okLabel, onYes) {
+    var body = el("div", {}, [
+      el("p", { style: "font-size:14.5px;margin:0 0 18px;color:var(--ink-900)" }, [message]),
+      el("div", { class: "btn-row", style: "justify-content:flex-end" }, [
+        el("button", { class: "btn", onclick: closeModal }, ["キャンセル"]),
+        el("button", { class: "btn danger", onclick: function () { closeModal(); onYes(); } }, [okLabel || "削除する"])
+      ])
+    ]);
+    openModal(body);
+  }
+  function formModal(opts) {
+    var inputs = {};
+    var body = el("div", {});
+    body.appendChild(el("h3", { style: "color:var(--navy-700);margin:0 0 14px;font-size:16px" }, [opts.title]));
+    opts.fields.forEach(function (f) {
+      var wrap = el("div", { class: "field", style: "margin-bottom:12px" });
+      wrap.appendChild(el("label", {}, [f.label]));
+      var input = el("input", { type: "text", inputmode: f.numeric ? "decimal" : null, placeholder: f.placeholder || "" });
+      input.value = f.value || "";
+      inputs[f.key] = input;
+      wrap.appendChild(input);
+      body.appendChild(wrap);
+    });
+    body.appendChild(el("div", { class: "btn-row", style: "justify-content:flex-end;margin-top:4px" }, [
+      el("button", { class: "btn", onclick: closeModal }, ["キャンセル"]),
+      el("button", { class: "btn primary", onclick: function () {
+        var vals = {}; opts.fields.forEach(function (f) { vals[f.key] = inputs[f.key].value.trim(); });
+        if (opts.validate) { var err = opts.validate(vals); if (err) { toast(err); return; } }
+        closeModal(); opts.onSave(vals);
+      } }, [opts.saveLabel || "保存"])
+    ]));
+    openModal(body);
+    setTimeout(function () { var first = opts.fields[0] && inputs[opts.fields[0].key]; if (first) first.focus(); }, 80);
+  }
+
+  function showHelp() {
+    var body = el("div", {}, [
+      el("h3", { style: "color:var(--navy-700);margin:0 0 12px" }, ["使い方"]),
+      el("p", { style: "font-size:13.5px" }, ["① 初回だけ「商品マスタ」タブで、Excelの棚卸表から「名称・容量・仕入単価」をコピーして貼り付け、商品を取り込みます。"]),
+      el("p", { style: "font-size:13.5px" }, ["② 「店販商品」のような見出し行は、取り込むと最初は普通の商品として並びます。その行の「見出しに変換」をタップすると見出しになります。"]),
+      el("p", { style: "font-size:13.5px" }, ["③ 毎月は「棚卸し入力」タブで対象月を選び、数えた在庫数を入力するだけ。金額は自動計算されます。入力済みの行はうっすら緑色になります。"]),
+      el("p", { style: "font-size:13.5px" }, ["④ 数え終わったら「この月を確定する」→「税理士提出用CSVを書き出す」でファイルを保存できます。"]),
+      el("div", { class: "btn-row", style: "justify-content:flex-end;margin-top:8px" }, [el("button", { class: "btn primary", onclick: closeModal }, ["閉じる"])])
+    ]);
+    openModal(body);
+  }
+  $("#helpBtn").addEventListener("click", showHelp);
+
+  /* ---------------- Import parsing (no auto header-guessing) ---------------- */
+  function parseImportText(text) {
+    var lines = text.split(/\r\n|\r|\n/).filter(function (l) { return l.trim().length > 0; });
+    var items = [];
+    lines.forEach(function (line) {
+      var cols = (line.indexOf("\t") >= 0 ? line.split("\t") : line.split(",")).map(function (c) { return (c || "").trim(); });
+      if (cols.length > 3) cols = cols.slice(0, 3);
+      var name, volume = "", priceRaw;
+      if (cols.length >= 3) { name = cols[0]; volume = cols[1]; priceRaw = cols[2]; }
+      else if (cols.length === 2) { name = cols[0]; priceRaw = cols[1]; }
+      else { name = cols[0]; priceRaw = ""; }
+      if (!name) return;
+      var priceNum = parseFloat(String(priceRaw).replace(/[¥,\s]/g, ""));
+      if (isNaN(priceNum)) priceNum = 0;
+      items.push({ id: uid(), type: "item", name: name, volume: volume, unitPrice: priceNum });
+    });
+    return { items: items };
+  }
+
+  /* ---------------- COUNT tab ---------------- */
+  var countSearch = "";
+  var collapsedHeaders = {};
+
+  function renderCount() {
+    var main = $("#main"); main.innerHTML = "";
+    var month = UI.countMonth || currentMonth(); UI.countMonth = month; saveUI();
+    var rec = ensureMonth(month);
+
+    main.appendChild(el("div", { class: "btn-row", style: "align-items:flex-end;margin-bottom:10px;flex-wrap:wrap" }, [
+      el("div", { class: "field", style: "min-width:150px" }, [
+        el("label", {}, ["対象月"]),
+        el("input", { type: "month", value: month, onchange: function (e) { UI.countMonth = e.target.value || currentMonth(); saveUI(); renderCount(); } })
+      ]),
+      rec.finalizedAt ? el("span", { class: "chip teal" }, ["確定済み（" + new Date(rec.finalizedAt).toLocaleDateString("ja-JP") + "）"]) : el("span", { class: "chip gray" }, ["未確定（下書き）"])
+    ]));
+
+    if (!DATA.categories.length || !DATA.items.length) {
+      main.appendChild(el("div", { class: "card" }, [el("div", { class: "card-body" }, [
+        el("div", { class: "empty-note" }, ["まだ商品が登録されていません。「商品マスタ」タブから、Excelの棚卸表を貼り付けて取り込んでください。"])
+      ])]));
+      return;
+    }
+
+    var catId = UI.countCat || DATA.categories[0].id;
+    if (!DATA.categories.find(function (c) { return c.id === catId; })) catId = DATA.categories[0].id;
+
+    var subtabs = el("div", { class: "subtabs" }, DATA.categories.map(function (c) {
+      var pr = categoryProgress(month, c.id);
+      return el("button", { class: c.id === catId ? "active" : "", onclick: function () { UI.countCat = c.id; saveUI(); renderCount(); } }, [
+        el("span", {}, [c.name]),
+        el("span", { class: "badge" }, [pr.counted + "/" + pr.total]),
+      ]);
+    }));
+    main.appendChild(subtabs);
+
+    var pr = categoryProgress(month, catId);
+    var pct = pr.total ? Math.round((pr.counted / pr.total) * 100) : 0;
+    main.appendChild(el("div", { class: "progress-line" }, [
+      el("div", { class: "progress-track" }, [el("div", { class: "progress-fill", style: "width:" + pct + "%" })]),
+      el("div", { class: "progress-text" }, [pr.counted + " / " + pr.total + "件 入力済み"])
+    ]));
+
+    main.appendChild(el("div", { class: "search-row" }, [
+      el("input", { type: "text", placeholder: "商品名で検索…", value: countSearch, oninput: function (e) { countSearch = e.target.value; renderCountList(catId, month); } })
+    ]));
+
+    main.appendChild(el("div", { id: "countList" }));
+    renderCountList(catId, month);
+
+    var bar = el("div", { class: "totalbar" });
+    function refreshBar() {
+      bar.innerHTML = "";
+      bar.appendChild(el("div", { class: "row1" }, [
+        el("div", {}, [el("div", { class: "lbl" }, ["総合計金額（全カテゴリ）"]), el("div", { class: "grand" }, [yen(monthGrandTotal(month))])]),
+        el("div", { style: "text-align:right" }, [el("div", { class: "lbl" }, [DATA.categories.find(function (c) { return c.id === catId; }).name + " 小計"]), el("div", { style: "font-weight:700;font-variant-numeric:tabular-nums" }, [yen(monthCategoryTotal(month, catId))])])
+      ]));
+      var actions = el("div", { class: "btn-row" });
+      if (!rec.finalizedAt) {
+        actions.appendChild(el("button", { class: "btn primary", onclick: function () {
+          confirmModal(monthLabel(month) + " の棚卸しを確定しますか？（後からでも取り消して編集できます）", "確定する", function () {
+            rec.finalizedAt = new Date().toISOString(); saveData(); renderCount();
+          });
+        } }, ["この月を確定する"]));
+      } else {
+        actions.appendChild(el("button", { class: "btn", onclick: function () { rec.finalizedAt = null; saveData(); renderCount(); } }, ["確定を取り消す"]));
+      }
+      actions.appendChild(el("button", { class: "btn navy", onclick: function () { exportMonthCsv(month); } }, ["税理士提出用CSVを書き出す"]));
+      bar.appendChild(actions);
+    }
+    refreshBar();
+    window.__willowsRefreshBar = function () { refreshBar(); renderCountSubtabsBadges(month, catId); };
+    main.appendChild(bar);
+  }
+
+  function renderCountSubtabsBadges(month, catId) {
+    // cheap refresh of progress line + subtab badges without full re-render
+    var main = $("#main");
+    var badges = main.querySelectorAll(".subtabs button .badge");
+    DATA.categories.forEach(function (c, i) {
+      var pr = categoryProgress(month, c.id);
+      if (badges[i]) badges[i].textContent = pr.counted + "/" + pr.total;
+    });
+    var pr2 = categoryProgress(month, catId);
+    var pct = pr2.total ? Math.round((pr2.counted / pr2.total) * 100) : 0;
+    var fill = main.querySelector(".progress-fill");
+    var text = main.querySelector(".progress-text");
+    if (fill) fill.style.width = pct + "%";
+    if (text) text.textContent = pr2.counted + " / " + pr2.total + "件 入力済み";
+  }
+
+  function buildSections(items) {
+    var sections = []; var current = null;
+    items.forEach(function (it) {
+      if (it.type === "header") { current = { headerId: it.id, label: it.name, items: [] }; sections.push(current); }
+      else { if (!current) { current = { headerId: null, label: null, items: [] }; sections.push(current); } current.items.push(it); }
+    });
+    return sections;
+  }
+
+  function renderCountList(catId, month) {
+    var listWrap = $("#countList"); if (!listWrap) return;
+    listWrap.innerHTML = "";
+    var rec = ensureMonth(month);
+    var allItems = catItemsOrdered(catId);
+    if (!allItems.length) { listWrap.appendChild(el("div", { class: "empty-note" }, ["このカテゴリにはまだ商品がありません。"])); return; }
+    var q = countSearch.trim().toLowerCase();
+    var sections = buildSections(allItems);
+
+    var anyRendered = false;
+    sections.forEach(function (sec) {
+      var visItems = q ? sec.items.filter(function (it) { return it.name.toLowerCase().indexOf(q) >= 0; }) : sec.items;
+      if (!visItems.length) return;
+      anyRendered = true;
+      var gTotal = visItems.reduce(function (s, it) { return s + itemValue(it, rec.counts[it.id] || 0); }, 0);
+      var card = el("div", { class: "card" });
+      if (sec.label !== null) {
+        var collapsed = !!collapsedHeaders[sec.headerId];
+        card.appendChild(el("div", { class: "group-head", onclick: function () { collapsedHeaders[sec.headerId] = !collapsed; renderCountList(catId, month); } }, [
+          el("div", { class: "lbl" }, [(collapsed ? "▸ " : "▾ ") + sec.label]),
+          el("div", { class: "meta" }, [visItems.length + "件 / " + yen(gTotal)])
+        ]));
+        if (collapsed) { listWrap.appendChild(card); return; }
+      }
+      var body = el("div", {});
+      visItems.forEach(function (it) {
+        var qty = rec.counts[it.id] || 0;
+        var row = el("div", { class: "item-row" + (qty > 0 ? " counted" : "") });
+        row.appendChild(el("div", { class: "item-info" }, [
+          el("div", { class: "nm" }, [it.name]),
+          el("div", { class: "meta" }, [(it.volume ? it.volume + " ／ " : "") + "@" + (it.unitPrice || 0).toLocaleString("ja-JP")])
+        ]));
+        var qtyInput = el("input", { type: "text", inputmode: "numeric", value: String(qty) });
+        var valueSpan = el("div", { class: "item-value" }, [yen(itemValue(it, qty))]);
+        function setQty(n) {
+          n = Math.max(0, n || 0);
+          rec.counts[it.id] = n; saveData();
+          qtyInput.value = String(n);
+          valueSpan.textContent = yen(itemValue(it, n));
+          row.classList.toggle("counted", n > 0);
+          if (window.__willowsRefreshBar) window.__willowsRefreshBar();
+        }
+        qtyInput.addEventListener("input", debounce(function () { setQty(parseInt(qtyInput.value, 10) || 0); }, 200));
+        qtyInput.addEventListener("focus", function () { qtyInput.select(); });
+        row.appendChild(el("div", { class: "stepper" }, [
+          el("button", { type: "button", onclick: function () { setQty((rec.counts[it.id] || 0) - 1); } }, ["−"]),
+          qtyInput,
+          el("button", { type: "button", onclick: function () { setQty((rec.counts[it.id] || 0) + 1); } }, ["＋"])
+        ]));
+        row.appendChild(valueSpan);
+        body.appendChild(row);
+      });
+      card.appendChild(body);
+      listWrap.appendChild(card);
+    });
+    if (!anyRendered) listWrap.appendChild(el("div", { class: "empty-note" }, ["該当する商品がありません。"]));
+  }
+
+  function exportMonthCsv(month) {
+    var rec = ensureMonth(month);
+    var lines = [];
+    lines.push(["カテゴリ", "見出し", "商品名", "容量", "仕入単価", "在庫数", "在庫高"].map(csvEscape).join(","));
+    DATA.categories.forEach(function (cat) {
+      var currentLabel = "";
+      catItemsOrdered(cat.id).forEach(function (it) {
+        if (it.type === "header") { currentLabel = it.name; return; }
+        var qty = rec.counts[it.id] || 0;
+        lines.push([cat.name, currentLabel, it.name, it.volume || "", it.unitPrice || 0, qty, itemValue(it, qty)].map(csvEscape).join(","));
+      });
+      lines.push(["", "", "", "", "", cat.name + " 小計", monthCategoryTotal(month, cat.id)].map(csvEscape).join(","));
+    });
+    lines.push(["", "", "", "", "", "総合計金額", monthGrandTotal(month)].map(csvEscape).join(","));
+    var csv = "﻿" + lines.join("\r\n");
+    offerDownload("WILLOWS_棚卸表_" + month + ".csv", csv, "text/csv;charset=utf-8");
+  }
+
+  /* ---------------- MASTER tab ---------------- */
+  function openCategoryEditor() {
+    function build() {
+      var body = el("div", {});
+      body.appendChild(el("h3", { style: "color:var(--navy-700);margin:0 0 14px;font-size:16px" }, ["カテゴリを編集"]));
+      DATA.categories.forEach(function (c) {
+        var row = el("div", { style: "display:flex;gap:6px;margin-bottom:8px;align-items:center" });
+        var input = el("input", { type: "text", value: c.name });
+        input.addEventListener("input", debounce(function () { c.name = input.value; saveData(); }, 300));
+        row.appendChild(input);
+        row.appendChild(el("button", { class: "btn sm danger", onclick: function () {
+          confirmModal("「" + c.name + "」とその中の商品をすべて削除しますか？", "削除する", function () {
+            DATA.items = DATA.items.filter(function (it) { return it.categoryId !== c.id; });
+            DATA.categories = DATA.categories.filter(function (x) { return x.id !== c.id; });
+            if (UI.masterCat === c.id) UI.masterCat = DATA.categories[0] ? DATA.categories[0].id : null;
+            if (UI.countCat === c.id) UI.countCat = DATA.categories[0] ? DATA.categories[0].id : null;
+            saveData(); saveUI(); closeModal(); openCategoryEditor(); renderMaster();
+          });
+        } }, ["削除"]));
+        body.appendChild(row);
+      });
+      body.appendChild(el("div", { class: "btn-row", style: "margin-top:10px;justify-content:space-between" }, [
+        el("button", { class: "btn sm", onclick: function () {
+          formModal({
+            title: "新しいカテゴリ", fields: [{ key: "name", label: "カテゴリ名", placeholder: "例：④その他" }],
+            validate: function (v) { if (!v.name) return "カテゴリ名を入力してください"; },
+            onSave: function (v) { var c = { id: uid(), name: v.name }; DATA.categories.push(c); UI.masterCat = c.id; saveData(); saveUI(); openCategoryEditor(); renderMaster(); }
+          });
+        } }, ["＋カテゴリ追加"]),
+        el("button", { class: "btn primary sm", onclick: function () { closeModal(); renderMaster(); } }, ["閉じる"])
+      ]));
+      return body;
+    }
+    openModal(build());
+  }
+
+  function renderMaster() {
+    var main = $("#main"); main.innerHTML = "";
+
+    var catRow = el("div", { class: "btn-row", style: "margin-bottom:12px;align-items:center" });
+    DATA.categories.forEach(function (c) {
+      catRow.appendChild(el("button", { class: "btn sm" + (UI.masterCat === c.id ? " navy" : ""), onclick: function () { UI.masterCat = c.id; saveUI(); renderMaster(); } }, [c.name]));
+    });
+    catRow.appendChild(el("button", { class: "icon-btn", style: "color:var(--navy-700);border-color:var(--line-strong);background:var(--paper-1)", onclick: openCategoryEditor }, ["⚙"]));
+    main.appendChild(catRow);
+
+    var catId = UI.masterCat || (DATA.categories[0] && DATA.categories[0].id);
+    if (!catId) { main.appendChild(el("div", { class: "empty-note" }, ["カテゴリがありません。右上の⚙から作成してください。"])); return; }
+    var cat = DATA.categories.find(function (c) { return c.id === catId; });
+
+    var importCard = el("div", { class: "card" }, [el("div", { class: "card-head" }, [cat.name + " に商品を取り込む"]), el("div", { class: "card-body" })]);
+    var importBody = importCard.querySelector(".card-body");
+    importBody.appendChild(el("div", { class: "hint" }, [
+      "Excelで「名称・容量・仕入単価」（容量が無いシートは「名称・仕入単価」）の列を選んでコピーし、下に貼り付けてください。「店販商品」のような見出し行も、ひとまずそのまま貼り付けて大丈夫です（あとで見出しに変換できます）。"
+    ]));
+    var ta = el("textarea", { placeholder: "ここにExcelからコピーした内容を貼り付け" });
+    importBody.appendChild(ta);
+    importBody.appendChild(el("div", { class: "btn-row" }, [
+      el("button", { class: "btn primary", onclick: function () {
+        var parsed = parseImportText(ta.value);
+        if (!parsed.items.length) { toast("取り込める商品が見つかりませんでした"); return; }
+        parsed.items.forEach(function (it) { it.categoryId = catId; DATA.items.push(it); });
+        saveData(); ta.value = "";
+        toast(parsed.items.length + "件の商品を取り込みました");
+        renderMaster();
+      } }, ["取り込む"])
+    ]));
+    main.appendChild(importCard);
+
+    var items = catItemsOrdered(catId);
+    var listCard = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, [
+        el("span", {}, [cat.name + "（" + items.length + "件）"]),
+        el("div", { class: "btn-row" }, [
+          el("button", { class: "btn sm", onclick: function () { addHeaderModal(catId); } }, ["＋見出し"]),
+          el("button", { class: "btn sm", onclick: function () { addItemModal(catId); } }, ["＋商品"])
+        ])
+      ])
+    ]);
+    var listBody = el("div", { style: "padding:4px 10px" });
+    if (!items.length) listBody.appendChild(el("div", { class: "empty-note" }, ["まだ商品がありません。上の欄から取り込むか「＋商品」で追加してください。"]));
+    items.forEach(function (it) {
+      if (it.type === "header") {
+        var hrow = el("div", { class: "master-row header-row" });
+        var nameInput = el("input", { type: "text", class: "w-name", value: it.name, style: "font-weight:700" });
+        nameInput.addEventListener("input", debounce(function () { it.name = nameInput.value; saveData(); }, 300));
+        hrow.appendChild(nameInput);
+        hrow.appendChild(el("div", { class: "master-actions" }, [
+          el("button", { class: "btn sm", onclick: function () { it.type = "item"; it.unitPrice = it.unitPrice || 0; saveData(); renderMaster(); } }, ["商品に戻す"]),
+          el("button", { class: "btn sm danger", onclick: function () {
+            confirmModal("見出し「" + it.name + "」を削除しますか？（この下の商品は削除されません）", "削除する", function () { DATA.items = DATA.items.filter(function (x) { return x.id !== it.id; }); saveData(); renderMaster(); });
+          } }, ["削除"])
+        ]));
+        listBody.appendChild(hrow);
+        return;
+      }
+      var row = el("div", { class: "master-row" });
+      var nameInput = el("input", { type: "text", class: "w-name", value: it.name });
+      var volInput = el("input", { type: "text", class: "w-vol", value: it.volume || "", placeholder: "容量" });
+      var priceInput = el("input", { type: "text", class: "w-price", value: String(it.unitPrice || 0), inputmode: "decimal" });
+      nameInput.addEventListener("input", debounce(function () { it.name = nameInput.value; saveData(); }, 300));
+      volInput.addEventListener("input", debounce(function () { it.volume = volInput.value; saveData(); }, 300));
+      priceInput.addEventListener("input", debounce(function () { it.unitPrice = parseFloat(priceInput.value) || 0; saveData(); }, 300));
+      row.appendChild(nameInput); row.appendChild(volInput); row.appendChild(priceInput);
+      var catSelect = el("select", { onchange: function (e) { it.categoryId = e.target.value; saveData(); renderMaster(); } },
+        DATA.categories.map(function (c) { return el("option", { value: c.id, selected: c.id === catId ? "selected" : null }, [c.name]); }));
+      row.appendChild(catSelect);
+      row.appendChild(el("div", { class: "master-actions" }, [
+        el("button", { class: "btn sm", onclick: function () { it.type = "header"; saveData(); renderMaster(); } }, ["見出しに変換"]),
+        el("button", { class: "btn sm danger", onclick: function () {
+          confirmModal("「" + it.name + "」を削除しますか？", "削除する", function () { DATA.items = DATA.items.filter(function (x) { return x.id !== it.id; }); saveData(); renderMaster(); });
+        } }, ["削除"])
+      ]));
+      listBody.appendChild(row);
+    });
+    listCard.appendChild(listBody);
+    main.appendChild(listCard);
+  }
+
+  function addHeaderModal(catId) {
+    formModal({
+      title: "見出しを追加", fields: [{ key: "name", label: "見出し名（例：店販商品）" }],
+      validate: function (v) { if (!v.name) return "見出し名を入力してください"; },
+      onSave: function (v) { DATA.items.push({ id: uid(), categoryId: catId, type: "header", name: v.name, volume: "", unitPrice: 0 }); saveData(); renderMaster(); }
+    });
+  }
+  function addItemModal(catId) {
+    formModal({
+      title: "商品を追加",
+      fields: [{ key: "name", label: "商品名" }, { key: "volume", label: "容量（任意）" }, { key: "price", label: "仕入単価", numeric: true }],
+      validate: function (v) { if (!v.name) return "商品名を入力してください"; },
+      onSave: function (v) { DATA.items.push({ id: uid(), categoryId: catId, type: "item", name: v.name, volume: v.volume || "", unitPrice: parseFloat(v.price) || 0 }); saveData(); renderMaster(); }
+    });
+  }
+
+  /* ---------------- HISTORY tab ---------------- */
+  function renderHistory() {
+    var main = $("#main"); main.innerHTML = "";
+    var months = Object.keys(DATA.months).sort().reverse();
+    var card = el("div", { class: "card" }, [el("div", { class: "card-head" }, ["月次履歴"])]);
+    var body = el("div", { class: "card-body" });
+    if (!months.length) body.appendChild(el("div", { class: "empty-note" }, ["まだ棚卸しの記録がありません。"]));
+    months.forEach(function (m) {
+      var rec = DATA.months[m];
+      body.appendChild(el("div", { class: "btn-row", style: "justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)" }, [
+        el("div", {}, [el("div", { style: "font-weight:700" }, [monthLabel(m)]), el("div", { class: "hint" }, [yen(monthGrandTotal(m))])]),
+        rec.finalizedAt ? el("span", { class: "chip teal" }, ["確定済み"]) : el("span", { class: "chip amber" }, ["下書き"]),
+        el("div", { class: "btn-row" }, [
+          el("button", { class: "btn sm", onclick: function () { UI.countMonth = m; UI.tab = "count"; saveUI(); render(); } }, ["開く"]),
+          el("button", { class: "btn sm navy", onclick: function () { exportMonthCsv(m); } }, ["CSV"])
+        ])
+      ]));
+    });
+    card.appendChild(body); main.appendChild(card);
+
+    main.appendChild(el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["全データのバックアップ"]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "hint" }, ["機種変更の前などに、商品マスタと全月の記録をまとめてバックアップできます。"]),
+        el("div", { class: "btn-row" }, [
+          el("button", { class: "btn", onclick: function () { offerDownload("willows_inventory_backup_" + currentMonth() + ".json", JSON.stringify(DATA, null, 2), "application/json"); } }, ["全データ書き出し"]),
+          el("button", { class: "btn", onclick: function () {
+            confirmModal("バックアップを復元すると、今のデータは上書きされます。続けますか？", "復元する", function () {
+              var input = el("input", { type: "file", accept: "application/json,.json", style: "display:none" });
+              input.addEventListener("change", function () {
+                var f = input.files && input.files[0]; if (!f) return;
+                var reader = new FileReader();
+                reader.onload = function () { try { DATA = JSON.parse(reader.result); saveData(); toast("復元しました"); render(); } catch (e) { toast("読み込みに失敗しました"); } };
+                reader.readAsText(f);
+              });
+              document.body.appendChild(input); input.click();
+              setTimeout(function () { document.body.removeChild(input); }, 3000);
+            });
+          } }, ["全データ復元"])
+        ])
+      ])
+    ]));
+  }
+
+  /* ---------------- Tab switching ---------------- */
+  function render() {
+    $("#tabCount").classList.toggle("active", UI.tab === "count");
+    $("#tabMaster").classList.toggle("active", UI.tab === "master");
+    $("#tabHistory").classList.toggle("active", UI.tab === "history");
+    $("#subline").textContent = UI.tab === "count" ? "在庫数を数えて入力するだけ" : UI.tab === "master" ? "商品マスタの管理" : "月次履歴とバックアップ";
+    if (UI.tab === "count") renderCount();
+    else if (UI.tab === "master") renderMaster();
+    else renderHistory();
+  }
+  $("#tabCount").addEventListener("click", function () { UI.tab = "count"; saveUI(); render(); });
+  $("#tabMaster").addEventListener("click", function () { UI.tab = "master"; saveUI(); render(); });
+  $("#tabHistory").addEventListener("click", function () { UI.tab = "history"; saveUI(); render(); });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
