@@ -1,0 +1,1003 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1e4d6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>WILLOW'S 育成PDCAシート</title>
+<style>
+  :root {
+    --navy-900: #12293b;
+    --navy-700: #1e4d6b;
+    --navy-600: #2c6289;
+    --teal-600: #3f7d69;
+    --teal-500: #4f9880;
+    --amber-600: #c98a3b;
+    --red-600: #b8483f;
+    --paper-0: #f4f6f7;
+    --paper-1: #ffffff;
+    --paper-2: #e8edf0;
+    --ink-900: #1b2733;
+    --ink-500: #5b6b78;
+    --ink-300: #8b9aa5;
+    --line: #d8dee2;
+    --line-strong: #c1cbd1;
+    --focus: #2c6289;
+    --radius: 10px;
+    --font-ui: system-ui, -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --navy-900: #0c1c28;
+      --navy-700: #4a86ab;
+      --navy-600: #5f9bc0;
+      --teal-600: #5fa98f;
+      --teal-500: #6fbfa2;
+      --amber-600: #d9a35f;
+      --red-600: #d3695f;
+      --paper-0: #101820;
+      --paper-1: #17222c;
+      --paper-2: #1e2b36;
+      --ink-900: #e7edf1;
+      --ink-500: #9bacb8;
+      --ink-300: #6d818d;
+      --line: #2a3944;
+      --line-strong: #384955;
+      --focus: #6fb3d9;
+    }
+  }
+  :root[data-theme="dark"] {
+    --navy-900: #0c1c28; --navy-700: #4a86ab; --navy-600: #5f9bc0;
+    --teal-600: #5fa98f; --teal-500: #6fbfa2; --amber-600: #d9a35f; --red-600: #d3695f;
+    --paper-0: #101820; --paper-1: #17222c; --paper-2: #1e2b36;
+    --ink-900: #e7edf1; --ink-500: #9bacb8; --ink-300: #6d818d;
+    --line: #2a3944; --line-strong: #384955; --focus: #6fb3d9;
+  }
+  :root[data-theme="light"] {
+    --navy-900: #12293b; --navy-700: #1e4d6b; --navy-600: #2c6289;
+    --teal-600: #3f7d69; --teal-500: #4f9880; --amber-600: #c98a3b; --red-600: #b8483f;
+    --paper-0: #f4f6f7; --paper-1: #ffffff; --paper-2: #e8edf0;
+    --ink-900: #1b2733; --ink-500: #5b6b78; --ink-300: #8b9aa5;
+    --line: #d8dee2; --line-strong: #c1cbd1; --focus: #2c6289;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-ui);
+    background: var(--paper-0);
+    color: var(--ink-900);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  h1, h2, h3 { text-wrap: balance; margin: 0; }
+  button { font-family: inherit; }
+  input, textarea, select { font-family: inherit; color: inherit; }
+
+  .app-shell { max-width: 1180px; margin: 0 auto; padding-bottom: 96px; }
+
+  /* ---- Topbar ---- */
+  .topbar {
+    background: linear-gradient(180deg, var(--navy-900), var(--navy-700));
+    color: #eef4f8;
+    padding: 14px 16px 12px;
+    position: sticky; top: 0; z-index: 40;
+    box-shadow: 0 2px 10px rgba(0,0,0,.18);
+  }
+  .topbar-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; max-width: 1180px; margin: 0 auto; }
+  .brand { display: flex; flex-direction: column; gap: 1px; }
+  .brand .name { font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+  .brand .sub { font-size: 11.5px; color: #b9cedd; letter-spacing: .04em; }
+  .help-btn {
+    width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255,255,255,.35);
+    background: rgba(255,255,255,.08); color: #eef4f8; font-size: 14px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .help-btn:hover { background: rgba(255,255,255,.18); }
+
+  .role-switch {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+    background: rgba(255,255,255,.10); border-radius: 10px; padding: 4px; margin-top: 12px;
+    max-width: 1180px; margin-left: auto; margin-right: auto;
+  }
+  .role-switch button {
+    border: none; background: transparent; color: #d7e4ec; padding: 9px 10px; border-radius: 7px;
+    font-size: 13.5px; font-weight: 600; cursor: pointer; letter-spacing: .01em;
+  }
+  .role-switch button.active { background: var(--paper-1); color: var(--navy-900); }
+
+  main { padding: 16px; }
+  @media (min-width: 720px) { main { padding: 22px 20px; } }
+
+  /* ---- Cards / sections ---- */
+  .card {
+    background: var(--paper-1); border: 1px solid var(--line); border-radius: var(--radius);
+    margin-bottom: 14px; overflow: hidden;
+  }
+  .card-head {
+    background: var(--paper-2); padding: 10px 14px; border-bottom: 1px solid var(--line);
+    font-weight: 700; font-size: 13px; color: var(--navy-700); letter-spacing: .03em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-body { padding: 14px; display: flex; flex-direction: column; gap: 14px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12.5px; font-weight: 600; color: var(--ink-500); }
+  .field .hint { font-size: 11.5px; color: var(--ink-300); }
+  textarea, input[type=text], input[type=number], input[type=month], input[type=date], select {
+    border: 1px solid var(--line-strong); border-radius: 8px; padding: 9px 11px; font-size: 14.5px;
+    background: var(--paper-0); color: var(--ink-900); width: 100%;
+  }
+  textarea { min-height: 68px; resize: vertical; line-height: 1.5; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--focus); outline-offset: 1px; }
+  .num { font-variant-numeric: tabular-nums; font-family: var(--font-mono); }
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 560px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+  .grid-3 { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 640px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .scale10 { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; }
+  .scale10 button {
+    border: 1px solid var(--line-strong); background: var(--paper-0); color: var(--ink-500);
+    border-radius: 6px; padding: 8px 0; font-size: 13px; font-weight: 700; cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .scale10 button.sel { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+
+  /* ---- Buttons ---- */
+  .btn {
+    border: 1px solid var(--line-strong); background: var(--paper-1); color: var(--ink-900);
+    padding: 9px 14px; border-radius: 8px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--navy-600); }
+  .btn.primary { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+  .btn.primary:hover { background: var(--teal-500); }
+  .btn.navy { background: var(--navy-700); border-color: var(--navy-700); color: #fff; }
+  .btn.ghost { background: transparent; border-color: transparent; color: var(--navy-700); }
+  .btn.danger { color: var(--red-600); border-color: var(--red-600); background: transparent; }
+  .btn.sm { padding: 5px 10px; font-size: 12.5px; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ---- Chips / status ---- */
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+  }
+  .chip.gray { background: var(--paper-2); color: var(--ink-500); }
+  .chip.amber { background: color-mix(in srgb, var(--amber-600) 18%, transparent); color: var(--amber-600); }
+  .chip.teal { background: color-mix(in srgb, var(--teal-600) 18%, transparent); color: var(--teal-600); }
+  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* ---- Bottom action bar ---- */
+  .actionbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: var(--paper-1); border-top: 1px solid var(--line);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    display: flex; gap: 8px; justify-content: flex-end; box-shadow: 0 -4px 14px rgba(0,0,0,.08);
+  }
+  .actionbar .status-note { margin-right: auto; font-size: 12px; color: var(--ink-500); align-self: center; }
+
+  /* ---- Staff picker row ---- */
+  .picker-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 14px; }
+  .picker-row .field { min-width: 150px; flex: 1 1 150px; }
+
+  .staff-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .staff-tabs button {
+    border: 1px solid var(--line-strong); background: var(--paper-1); color: var(--ink-900);
+    padding: 7px 13px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer;
+  }
+  .staff-tabs button.active { background: var(--navy-700); border-color: var(--navy-700); color: #fff; }
+
+  /* ---- Dashboard grid ---- */
+  .dash-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
+  @media (min-width: 640px) { .dash-grid { grid-template-columns: repeat(3, 1fr); } }
+  .dash-card {
+    background: var(--paper-1); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 13px 14px; display: flex; flex-direction: column; gap: 8px; cursor: pointer;
+  }
+  .dash-card:hover { border-color: var(--navy-600); }
+  .dash-card .who { font-size: 14.5px; font-weight: 700; }
+  .dash-card .role { font-size: 11.5px; color: var(--ink-500); }
+
+  /* ---- Sub-tabs (sheet 1/2/3) ---- */
+  .subtabs { display: flex; gap: 4px; background: var(--paper-2); border-radius: 9px; padding: 3px; margin-bottom: 14px; }
+  .subtabs button {
+    flex: 1; border: none; background: transparent; padding: 9px 6px; border-radius: 6px;
+    font-size: 12.5px; font-weight: 700; color: var(--ink-500); cursor: pointer;
+  }
+  .subtabs button.active { background: var(--paper-1); color: var(--navy-700); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+  /* ---- Progress table ---- */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  table.progress { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 13px; }
+  table.progress th, table.progress td { border-bottom: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  table.progress th { background: var(--paper-2); color: var(--ink-500); font-size: 11.5px; font-weight: 700; position: sticky; top: 0; }
+  table.progress td.month-cell { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--navy-700); }
+  table.progress tr:last-child td { border-bottom: none; }
+
+  .readonly-block {
+    background: var(--paper-0); border: 1px dashed var(--line-strong); border-radius: 8px; padding: 10px 12px;
+    font-size: 13.5px; white-space: pre-wrap;
+  }
+  .empty-note { color: var(--ink-300); font-size: 13px; padding: 6px 2px; }
+
+  /* ---- Modal ---- */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(10,18,24,.55); display: flex; align-items: center; justify-content: center;
+    z-index: 60; padding: 16px;
+  }
+  .modal {
+    background: var(--paper-1); border-radius: 12px; max-width: 480px; width: 100%; max-height: 86vh; overflow-y: auto;
+    padding: 20px; border: 1px solid var(--line);
+  }
+  .modal h3 { color: var(--navy-700); font-size: 16px; margin-bottom: 10px; }
+  .modal p, .modal li { font-size: 13.5px; color: var(--ink-900); }
+  .modal ol, .modal ul { padding-left: 20px; }
+  .pin-dots { display: flex; gap: 10px; justify-content: center; margin: 14px 0; }
+  .pin-dots span { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--line-strong); }
+  .pin-dots span.filled { background: var(--navy-700); border-color: var(--navy-700); }
+  .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .keypad button { padding: 14px 0; font-size: 18px; border-radius: 8px; border: 1px solid var(--line-strong); background: var(--paper-0); cursor: pointer; font-variant-numeric: tabular-nums; }
+  .keypad button:hover { border-color: var(--navy-600); }
+
+  .toast {
+    position: fixed; bottom: 76px; left: 50%; transform: translateX(-50%); z-index: 70;
+    background: var(--navy-900); color: #eef4f8; padding: 9px 16px; border-radius: 999px; font-size: 13px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.25); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+  .section-label { font-size: 11.5px; font-weight: 700; color: var(--ink-300); letter-spacing: .06em; text-transform: uppercase; margin: 4px 0 -4px; }
+
+  a { color: var(--navy-600); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+
+<div class="app-shell">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <div class="name">WILLOW'S 育成PDCAシート</div>
+        <div class="sub" id="subline">スタッフ育成ミーティング・電子版</div>
+      </div>
+      <button class="help-btn" id="helpBtn" title="使い方">?</button>
+    </div>
+    <div class="role-switch">
+      <button id="roleStaffBtn">スタッフ入力</button>
+      <button id="roleManagerBtn">代表・店長（管理）</button>
+    </div>
+  </div>
+  <main id="main"></main>
+</div>
+
+<div id="modalLayer"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STAFF = [
+    { id: "onuki", name: "小貫", position: "スタイリスト" },
+    { id: "kawashima", name: "川島", position: "Jrスタイリスト" },
+    { id: "sato", name: "佐藤", position: "Jrスタイリスト" }
+  ];
+
+  var STORE_KEY = "willows_pdca_v1";
+  var UI_KEY = "willows_pdca_ui_v1";
+
+  /* ---------------- Storage layer ---------------- */
+  function emptyData() {
+    var records = {}, goals = {};
+    STAFF.forEach(function (s) {
+      records[s.id] = {};
+      goals[s.id] = { position: s.position, targetPosition: "", startMonth: "", mid3: "", mid6: "", mid1y: "", progress: [] };
+    });
+    return { records: records, goals: goals };
+  }
+
+  function loadData() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return emptyData();
+      var parsed = JSON.parse(raw);
+      var base = emptyData();
+      STAFF.forEach(function (s) {
+        if (parsed.records && parsed.records[s.id]) base.records[s.id] = parsed.records[s.id];
+        if (parsed.goals && parsed.goals[s.id]) base.goals[s.id] = Object.assign(base.goals[s.id], parsed.goals[s.id]);
+      });
+      return base;
+    } catch (e) { return emptyData(); }
+  }
+
+  function saveData() { localStorage.setItem(STORE_KEY, JSON.stringify(DATA)); }
+
+  function loadUI() {
+    try { return JSON.parse(localStorage.getItem(UI_KEY)) || {}; } catch (e) { return {}; }
+  }
+  function saveUI() { localStorage.setItem(UI_KEY, JSON.stringify(UI)); }
+
+  var DATA = loadData();
+  var UI = loadUI();
+  if (!UI.role) UI.role = "staff";
+
+  /* ---------------- Helpers ---------------- */
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function $all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (attrs[k] === null || attrs[k] === undefined || attrs[k] === false) return;
+      if (k === "class") e.className = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else if (k.slice(0, 2) === "on") e.addEventListener(k.slice(2), attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return e;
+  }
+  function staffById(id) { return STAFF.filter(function (s) { return s.id === id; })[0]; }
+  function currentMonth() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+  }
+  function monthLabel(m) {
+    if (!m) return "";
+    var parts = m.split("-");
+    return parts[0] + "年" + parseInt(parts[1], 10) + "月";
+  }
+  function esc(s) { return (s || "").replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function toast(msg) {
+    var t = $("#toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove("show"); }, 2400);
+  }
+  function debounce(fn, ms) { var t; return function () { var a = arguments; clearTimeout(t); t = setTimeout(function () { fn.apply(null, a); }, ms); }; }
+  function ensureMonthRecord(staffId, month) {
+    if (!DATA.records[staffId][month]) DATA.records[staffId][month] = { sheet1: null, sheet2: null };
+    return DATA.records[staffId][month];
+  }
+  function recordStatus(staffId, month) {
+    var r = DATA.records[staffId][month];
+    if (!r || !r.sheet1 || !r.sheet1.submittedAt) return "none";
+    if (!r.sheet2 || !r.sheet2.savedAt) return "submitted";
+    return "reviewed";
+  }
+  function statusChip(status) {
+    if (status === "none") return el("span", { class: "chip gray" }, ["未提出"]);
+    if (status === "submitted") return el("span", { class: "chip amber" }, ["提出済み・面談待ち"]);
+    return el("span", { class: "chip teal" }, ["面談済み"]);
+  }
+
+  /* ---------------- Download / import ---------------- */
+  function offerDownload(filename, obj) {
+    try {
+      var blob = new Blob([JSON.stringify(obj, null, 2)], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = el("a", { href: url, download: filename, style: "display:none" });
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      toast("書き出しました：" + filename);
+    } catch (e) {
+      toast("ファイル書き出しに失敗しました。「テキストをコピー」をお使いください。");
+    }
+  }
+  function readJsonFile(file, cb) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try { cb(null, JSON.parse(reader.result)); } catch (e) { cb(e); }
+    };
+    reader.onerror = function () { cb(reader.error); };
+    reader.readAsText(file);
+  }
+
+  /* ---------------- Modal helpers ---------------- */
+  function closeModal() { $("#modalLayer").innerHTML = ""; }
+  function openModal(contentEl) {
+    var layer = $("#modalLayer");
+    layer.innerHTML = "";
+    var backdrop = el("div", { class: "modal-backdrop", onclick: function (e) { if (e.target === backdrop) closeModal(); } });
+    var modal = el("div", { class: "modal" }, [contentEl]);
+    backdrop.appendChild(modal);
+    layer.appendChild(backdrop);
+  }
+
+  function showHelp() {
+    var body = el("div", {}, []);
+    body.appendChild(el("h3", {}, ["使い方 / このアプリについて"]));
+    body.appendChild(el("p", {}, [
+      "このアプリはWILLOW'Sのスタッフ育成ミーティングシート（本人記入・面談記録・個人目標管理）を、紙の代わりにスマホやPCで記入するためのものです。"
+    ]));
+    body.appendChild(el("p", {}, ["【重要】このアプリはスタッフ同士・店長とリアルタイムには自動同期しません。データは各自の端末（ブラウザ）の中に保存されます。次の流れで運用してください："]));
+    var ol = el("ol", {}, [
+      el("li", {}, ["スタッフは「スタッフ入力」で①本人記入シートを記入し、「提出する」を押す"]),
+      el("li", {}, ["「ファイルを書き出す」でJSONファイルを保存し、LINE等で店長に送る（またはミーティング時にその場でスマホ画面を見せてもよい）"]),
+      el("li", {}, ["店長は「代表・店長（管理）」で該当スタッフを開き、届いたJSONファイルを「インポート」する"]),
+      el("li", {}, ["面談中に②面談記録を入力し、③個人目標管理に反映する"])
+    ]);
+    body.appendChild(ol);
+    body.appendChild(el("p", {}, ["管理者データは端末のブラウザに保存されるため、機種変更前には「全データ書き出し」でバックアップを取ってください。"]));
+    body.appendChild(el("div", { class: "btn-row", style: "margin-top:8px;justify-content:flex-end" }, [
+      el("button", { class: "btn primary", onclick: closeModal }, ["閉じる"])
+    ]));
+    openModal(body);
+  }
+  $("#helpBtn").addEventListener("click", showHelp);
+
+  /* ================= STAFF MODE ================= */
+  function renderStaffMode() {
+    var main = $("#main");
+    main.innerHTML = "";
+    var staffId = UI.staffSelf || STAFF[0].id;
+    var month = UI.staffMonth || currentMonth();
+    UI.staffSelf = staffId; UI.staffMonth = month; saveUI();
+
+    var picker = el("div", { class: "picker-row" });
+    var nameField = el("div", { class: "field" }, [
+      el("label", {}, ["あなたの名前"]),
+    ]);
+    var select = el("select", { onchange: function (e) { UI.staffSelf = e.target.value; saveUI(); renderStaffMode(); } },
+      STAFF.map(function (s) { return el("option", { value: s.id, selected: s.id === staffId ? "selected" : null }, [s.name + "（" + s.position + "）"]); }));
+    nameField.appendChild(select);
+    picker.appendChild(nameField);
+
+    var monthField = el("div", { class: "field" }, [el("label", {}, ["対象月"])]);
+    var monthInput = el("input", { type: "month", value: month, onchange: function (e) { UI.staffMonth = e.target.value || currentMonth(); saveUI(); renderStaffMode(); } });
+    monthField.appendChild(monthInput);
+    picker.appendChild(monthField);
+    main.appendChild(picker);
+
+    var rec = ensureMonthRecord(staffId, month);
+    var s1 = rec.sheet1 || {};
+    var submitted = !!s1.submittedAt;
+
+    if (submitted) {
+      main.appendChild(el("div", { class: "chip teal", style: "margin-bottom:10px" }, ["提出済み（" + new Date(s1.submittedAt).toLocaleString("ja-JP") + "）"]));
+    }
+
+    main.appendChild(el("button", { class: "btn sm ghost", style: "margin-bottom:10px", onclick: function () {
+      UI.staffShowHistory = !UI.staffShowHistory; saveUI(); renderStaffMode();
+    } }, [UI.staffShowHistory ? "過去の記録を閉じる ▲" : "過去の記録を見る ▼"]));
+
+    if (UI.staffShowHistory) {
+      var pastMonths = Object.keys(DATA.records[staffId] || {}).sort().reverse();
+      var histRows = pastMonths.length
+        ? pastMonths.map(function (m) {
+            var status = recordStatus(staffId, m);
+            return el("div", { class: "btn-row", style: "justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)" }, [
+              el("div", {}, [el("strong", {}, [monthLabel(m)])]),
+              statusChip(status),
+              el("button", { class: "btn sm", onclick: function () { UI.staffMonth = m; saveUI(); renderStaffMode(); } }, [m === month ? "表示中" : "開く"])
+            ]);
+          })
+        : [el("div", { class: "empty-note" }, ["まだ記録がありません。"])];
+      main.appendChild(el("div", { class: "card" }, [
+        el("div", { class: "card-head" }, ["過去の記録（自分の分のみ）"]),
+        el("div", { class: "card-body" }, histRows)
+      ]));
+    }
+
+    function field(labelText, key, opts) {
+      opts = opts || {};
+      var wrap = el("div", { class: "field" });
+      wrap.appendChild(el("label", {}, [labelText]));
+      if (opts.hint) wrap.appendChild(el("div", { class: "hint" }, [opts.hint]));
+      var input;
+      if (opts.textarea) {
+        input = el("textarea", { placeholder: opts.placeholder || "" });
+        input.value = s1[key] || "";
+      } else {
+        input = el("input", { type: opts.numeric ? "text" : "text", inputmode: opts.numeric ? "decimal" : null, placeholder: opts.placeholder || "" });
+        if (opts.numeric) input.classList.add("num");
+        input.value = s1[key] || "";
+      }
+      input.addEventListener("input", debounce(function () {
+        s1[key] = input.value; rec.sheet1 = s1; saveData();
+      }, 250));
+      wrap.appendChild(input);
+      return wrap;
+    }
+
+    var cardA = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["A. 今月の振り返り"]),
+      el("div", { class: "card-body" }, [
+        field("1. 今月できるようになったこと・成長したこと", "a1", { textarea: true }),
+        field("2. 今月うまくいかなかったこと・悔しかったこと", "a2", { textarea: true }),
+        field("3. 自分で感じている今の課題", "a3", { textarea: true })
+      ])
+    ]);
+    var cardB = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["B. 技術・接客の振り返り"]),
+      el("div", { class: "card-body" }, [
+        field("4. 今月練習した技術／営業中に課題を感じた技術", "b4", { textarea: true }),
+        field("5. お客様対応で良かった点・難しかった点", "b5", { textarea: true })
+      ])
+    ]);
+
+    var motivWrap = el("div", { class: "field" }, [el("label", {}, ["今のモチベーション（10点満点）"])]);
+    var scale = el("div", { class: "scale10" });
+    for (var i = 1; i <= 10; i++) {
+      (function (n) {
+        var b = el("button", { type: "button", onclick: function () {
+          s1.c_motivation = n; rec.sheet1 = s1; saveData();
+          $all(".scale10 button", scale).forEach(function (x) { x.classList.remove("sel"); });
+          b.classList.add("sel");
+        } }, [String(n)]);
+        if (parseInt(s1.c_motivation, 10) === n) b.classList.add("sel");
+        scale.appendChild(b);
+      })(i);
+    }
+    motivWrap.appendChild(scale);
+
+    var cardC = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["C. 数字の振り返り"]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "grid-2" }, [
+          field("売上", "c_sales", { numeric: true, placeholder: "円" }),
+          field("指名数", "c_designation", { numeric: true, placeholder: "件" })
+        ]),
+        el("div", { class: "grid-2" }, [
+          field("新規／フリー入客数", "c_newfree", { numeric: true }),
+          field("店販金額／本数", "c_retail", { numeric: true })
+        ]),
+        field("口コミ獲得数", "c_reviews", { numeric: true }),
+        motivWrap,
+        field("モチベーションの理由／今不安に感じていること", "c_motivation_note", { textarea: true })
+      ])
+    ]);
+
+    var cardD = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["D. 短期・中期目標"]),
+      el("div", { class: "card-body" }, [
+        field("来月達成したい目標（短期目標）", "d_shortgoal", { textarea: true }),
+        field("そのために具体的にやること", "d_shortaction", { textarea: true }),
+        field("3ヶ月後・半年後にどうなっていたいか（中期目標）", "d_midgoal", { textarea: true }),
+        field("代表・店長に相談したいこと／サポートしてほしいこと", "d_consult", { textarea: true })
+      ])
+    ]);
+
+    [cardA, cardB, cardC, cardD].forEach(function (c) { main.appendChild(c); });
+
+    var bar = el("div", { class: "actionbar" });
+    bar.appendChild(el("div", { class: "status-note" }, [submitted ? "提出済みです。修正して再提出もできます。" : "記入内容は自動で下書き保存されます"]));
+    bar.appendChild(el("button", { class: "btn", onclick: function () {
+      copySummaryToClipboard(staffId, month);
+    } }, ["テキストをコピー"]));
+    bar.appendChild(el("button", { class: "btn primary", onclick: function () {
+      s1.submittedAt = new Date().toISOString();
+      rec.sheet1 = s1; saveData();
+      var name = staffById(staffId).name;
+      offerDownload("willows_honnin_" + name + "_" + month + ".json", { type: "sheet1", staffId: staffId, staffName: name, month: month, sheet1: s1 });
+      toast("提出しました。ファイルを店長に送ってください。");
+      renderStaffMode();
+    } }, [submitted ? "再提出してファイル書き出し" : "提出する（ファイル書き出し）"]));
+
+    var oldBar = $all(".actionbar", main);
+    main.appendChild(bar);
+  }
+
+  function sheet1SummaryText(staffId, month) {
+    var name = staffById(staffId).name;
+    var s1 = (DATA.records[staffId][month] || {}).sheet1 || {};
+    var lines = [
+      "【WILLOW'S 本人記入シート】" + name + " / " + monthLabel(month),
+      "■A.今月の振り返り",
+      "1.成長したこと: " + (s1.a1 || ""),
+      "2.うまくいかなかったこと: " + (s1.a2 || ""),
+      "3.今の課題: " + (s1.a3 || ""),
+      "■B.技術・接客",
+      "4.練習した技術/課題: " + (s1.b4 || ""),
+      "5.接客の良かった点/難しかった点: " + (s1.b5 || ""),
+      "■C.数字",
+      "売上: " + (s1.c_sales || "") + " / 指名数: " + (s1.c_designation || ""),
+      "新規・フリー入客数: " + (s1.c_newfree || "") + " / 店販: " + (s1.c_retail || ""),
+      "口コミ獲得数: " + (s1.c_reviews || "") + " / モチベーション: " + (s1.c_motivation || "") + "/10",
+      "モチベ理由・不安: " + (s1.c_motivation_note || ""),
+      "■D.目標",
+      "来月の短期目標: " + (s1.d_shortgoal || ""),
+      "具体的にやること: " + (s1.d_shortaction || ""),
+      "中期目標: " + (s1.d_midgoal || ""),
+      "相談したいこと: " + (s1.d_consult || "")
+    ];
+    return lines.join("\n");
+  }
+  function copySummaryToClipboard(staffId, month) {
+    var text = sheet1SummaryText(staffId, month);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("テキストをコピーしました。LINE等に貼り付けてください。"); })
+        .catch(function () { fallbackCopy(text); });
+    } else fallbackCopy(text);
+  }
+  function fallbackCopy(text) {
+    var ta = el("textarea", { style: "position:fixed;top:-1000px" });
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("テキストをコピーしました。"); } catch (e) { toast("コピーできませんでした。"); }
+    document.body.removeChild(ta);
+  }
+
+  /* ================= MANAGER MODE ================= */
+  function isManagerUnlocked() { return UI.managerUnlocked === true; }
+
+  function promptPin() {
+    var hasPin = !!UI.managerPin;
+    var entered = "";
+    var body = el("div", {});
+    body.appendChild(el("h3", {}, [hasPin ? "管理者PINを入力" : "管理者PINを設定"]));
+    if (!hasPin) body.appendChild(el("p", {}, ["この端末で使う4桁のPINを決めてください（簡易ロックです。厳密なセキュリティではありません）。"]));
+    var dots = el("div", { class: "pin-dots" }, [0, 1, 2, 3].map(function () { return el("span", {}); }));
+    body.appendChild(dots);
+    var errNote = el("p", { style: "color:var(--red-600);min-height:18px;font-size:12.5px;text-align:center" }, [""]);
+    body.appendChild(errNote);
+    var keypad = el("div", { class: "keypad" });
+    function updateDots() {
+      $all("span", dots).forEach(function (d, i) { d.classList.toggle("filled", i < entered.length); });
+    }
+    function pressDigit(d) {
+      if (entered.length >= 4) return;
+      entered += d; updateDots();
+      if (entered.length === 4) {
+        if (!hasPin) {
+          UI.managerPin = entered; saveUI();
+          UI.managerUnlocked = true; saveUI();
+          closeModal(); renderManagerMode();
+        } else if (entered === UI.managerPin) {
+          UI.managerUnlocked = true; saveUI();
+          closeModal(); renderManagerMode();
+        } else {
+          errNote.textContent = "PINが違います";
+          entered = ""; updateDots();
+        }
+      }
+    }
+    ["1","2","3","4","5","6","7","8","9","","0","⌫"].forEach(function (k) {
+      if (k === "") { keypad.appendChild(el("div", {})); return; }
+      keypad.appendChild(el("button", { type: "button", onclick: function () {
+        if (k === "⌫") { entered = entered.slice(0, -1); updateDots(); } else pressDigit(k);
+      } }, [k]));
+    });
+    body.appendChild(keypad);
+    body.appendChild(el("div", { class: "btn-row", style: "margin-top:12px;justify-content:space-between" }, [
+      el("button", { class: "btn ghost", onclick: function () { closeModal(); UI.role = "staff"; saveUI(); render(); } }, ["キャンセル"]),
+      hasPin ? el("button", { class: "btn sm ghost", onclick: function () {
+        if (confirm("PINをリセットしますか？（次回入力時に新しいPINを設定します）")) { delete UI.managerPin; saveUI(); closeModal(); promptPin(); }
+      } }, ["PINを忘れた場合"]) : el("span", {})
+    ]));
+    openModal(body);
+  }
+
+  var managerSelectedStaff = null;
+  var managerSelectedMonth = null;
+  var managerActiveTab = "sheet1";
+
+  function renderManagerMode() {
+    if (!isManagerUnlocked()) { promptPin(); $("#main").innerHTML = ""; return; }
+    var main = $("#main");
+    main.innerHTML = "";
+    var month = managerSelectedMonth || currentMonth();
+    managerSelectedMonth = month;
+
+    var topRow = el("div", { class: "btn-row", style: "justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap" }, [
+      el("div", { class: "field", style: "min-width:150px" }, [
+        el("label", {}, ["表示する月"]),
+        el("input", { type: "month", value: month, onchange: function (e) { managerSelectedMonth = e.target.value || currentMonth(); renderManagerMode(); } })
+      ]),
+      el("div", { class: "btn-row" }, [
+        el("button", { class: "btn sm", onclick: importFlow }, ["① 本人記入をインポート"]),
+        el("button", { class: "btn sm", onclick: backupExport }, ["全データ書き出し"]),
+        el("button", { class: "btn sm", onclick: backupImportFlow }, ["全データ復元"])
+      ])
+    ]);
+    main.appendChild(topRow);
+
+    var dash = el("div", { class: "dash-grid" });
+    STAFF.forEach(function (s) {
+      var status = recordStatus(s.id, month);
+      var card = el("div", { class: "dash-card", onclick: function () { managerSelectedStaff = s.id; managerActiveTab = "sheet1"; renderManagerMode(); } }, [
+        el("div", { class: "who" }, [s.name]),
+        el("div", { class: "role" }, [s.position]),
+        statusChip(status)
+      ]);
+      dash.appendChild(card);
+    });
+    main.appendChild(dash);
+
+    var staffId = managerSelectedStaff || STAFF[0].id;
+    managerSelectedStaff = staffId;
+    var staff = staffById(staffId);
+
+    var tabs = el("div", { class: "staff-tabs" }, STAFF.map(function (s) {
+      return el("button", { class: s.id === staffId ? "active" : "", onclick: function () { managerSelectedStaff = s.id; renderManagerMode(); } }, [s.name]);
+    }));
+    main.appendChild(tabs);
+
+    var subtabs = el("div", { class: "subtabs" }, [
+      el("button", { class: managerActiveTab === "sheet1" ? "active" : "", onclick: function () { managerActiveTab = "sheet1"; renderManagerMode(); } }, ["①本人記入"]),
+      el("button", { class: managerActiveTab === "sheet2" ? "active" : "", onclick: function () { managerActiveTab = "sheet2"; renderManagerMode(); } }, ["②面談記録"]),
+      el("button", { class: managerActiveTab === "sheet3" ? "active" : "", onclick: function () { managerActiveTab = "sheet3"; renderManagerMode(); } }, ["③目標管理"]),
+      el("button", { class: managerActiveTab === "history" ? "active" : "", onclick: function () { managerActiveTab = "history"; renderManagerMode(); } }, ["履歴"])
+    ]);
+    main.appendChild(subtabs);
+
+    var panel = el("div", { id: "mgrPanel" });
+    main.appendChild(panel);
+
+    if (managerActiveTab === "sheet1") renderMgrSheet1(panel, staffId, month);
+    else if (managerActiveTab === "sheet2") renderMgrSheet2(panel, staffId, month);
+    else if (managerActiveTab === "sheet3") renderMgrSheet3(panel, staffId, month);
+    else renderMgrHistory(panel, staffId);
+  }
+
+  function renderMgrSheet1(panel, staffId, month) {
+    var rec = ensureMonthRecord(staffId, month);
+    var s1 = rec.sheet1;
+    var card = el("div", { class: "card" });
+    card.appendChild(el("div", { class: "card-head" }, ["①本人記入シート（" + monthLabel(month) + "）"]));
+    var body = el("div", { class: "card-body" });
+    if (!s1) {
+      body.appendChild(el("div", { class: "empty-note" }, ["この月の本人記入データがまだありません。スタッフから受け取ったJSONファイルを「①本人記入をインポート」から読み込んでください。"]));
+    } else {
+      var rows = [
+        ["1. 成長したこと", s1.a1], ["2. うまくいかなかったこと", s1.a2], ["3. 今の課題", s1.a3],
+        ["4. 練習した技術／課題", s1.b4], ["5. 接客の良かった点・難しかった点", s1.b5],
+        ["売上", s1.c_sales], ["指名数", s1.c_designation], ["新規/フリー入客数", s1.c_newfree],
+        ["店販金額/本数", s1.c_retail], ["口コミ獲得数", s1.c_reviews], ["モチベーション(10点満点)", s1.c_motivation],
+        ["モチベ理由・不安", s1.c_motivation_note],
+        ["来月の短期目標", s1.d_shortgoal], ["具体的にやること", s1.d_shortaction],
+        ["中期目標", s1.d_midgoal], ["相談したいこと", s1.d_consult]
+      ];
+      rows.forEach(function (r) {
+        body.appendChild(el("div", { class: "field" }, [el("label", {}, [r[0]]), el("div", { class: "readonly-block" }, [r[1] || "（未記入）"])]));
+      });
+      if (s1.submittedAt) body.appendChild(el("div", { class: "hint" }, ["提出日時: " + new Date(s1.submittedAt).toLocaleString("ja-JP")]));
+    }
+    card.appendChild(body);
+    panel.appendChild(card);
+  }
+
+  function renderMgrSheet2(panel, staffId, month) {
+    var rec = ensureMonthRecord(staffId, month);
+    var s2 = rec.sheet2 || {};
+    function field(labelText, key, opts) {
+      opts = opts || {};
+      var wrap = el("div", { class: "field" });
+      wrap.appendChild(el("label", {}, [labelText]));
+      var input = opts.textarea ? el("textarea", {}) : el("input", { type: opts.type || "text" });
+      input.value = s2[key] || "";
+      input.addEventListener("input", debounce(function () { s2[key] = input.value; rec.sheet2 = s2; saveData(); }, 250));
+      wrap.appendChild(input);
+      return wrap;
+    }
+    var meta = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["面談情報"]),
+      el("div", { class: "card-body grid-2" }, [
+        field("面談者", "interviewer"),
+        field("面談日", "interviewDate", { type: "date" })
+      ])
+    ]);
+    var cardA = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["A. 本人の状態確認"]),
+      el("div", { class: "card-body" }, [
+        field("1. 現在のモチベーション・表情・発言から感じた状態", "a1", { textarea: true }),
+        field("2. 前向きに取り組めている点／不安や迷いが見える点", "a2", { textarea: true })
+      ])
+    ]);
+    var cardB = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["B. 今月の評価"]),
+      el("div", { class: "card-body" }, [
+        field("3. 良かった点・成長した点", "b3", { textarea: true }),
+        field("4. 改善が必要な点・課題", "b4", { textarea: true })
+      ])
+    ]);
+    var cardC = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["C. フィードバック"]),
+      el("div", { class: "card-body" }, [
+        field("5. 技術面のフィードバック", "c5", { textarea: true }),
+        field("6. 接客・指名化に関するフィードバック", "c6", { textarea: true }),
+        field("7. 数字面のフィードバック（売上・指名・店販・口コミなど）", "c7", { textarea: true })
+      ])
+    ]);
+    var cardD = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["D. 決定事項"]),
+      el("div", { class: "card-body" }, [
+        field("8. 来月の短期目標・具体的な行動", "d8", { textarea: true }),
+        field("9. 代表・店長がサポートすること", "d9", { textarea: true }),
+        field("10. 次回ミーティングまでの宿題／確認事項", "d10", { textarea: true })
+      ])
+    ]);
+    [meta, cardA, cardB, cardC, cardD].forEach(function (c) { panel.appendChild(c); });
+
+    var actions = el("div", { class: "btn-row" }, [
+      el("button", { class: "btn primary", onclick: function () {
+        s2.savedAt = new Date().toISOString(); rec.sheet2 = s2; saveData();
+        toast("面談記録を保存しました");
+        renderManagerMode();
+      } }, ["面談記録を保存"]),
+      el("button", { class: "btn", onclick: function () { pushToGoals(staffId, month, s2); } }, ["③目標管理表にこの内容を反映"])
+    ]);
+    panel.appendChild(actions);
+  }
+
+  function pushToGoals(staffId, month, s2) {
+    var g = DATA.goals[staffId];
+    var existingIdx = g.progress.findIndex(function (p) { return p.month === month; });
+    var row = { month: month, achieved: s2.b3 || "", issue: s2.b4 || "", nextGoal: s2.d8 || "", memo: s2.d9 || "" };
+    if (existingIdx >= 0) {
+      if (!confirm(monthLabel(month) + " の記録は既にあります。上書きしますか？")) return;
+      g.progress[existingIdx] = row;
+    } else {
+      g.progress.push(row);
+      g.progress.sort(function (a, b) { return a.month < b.month ? -1 : 1; });
+    }
+    saveData();
+    toast("③目標管理表に反映しました");
+    managerActiveTab = "sheet3";
+    renderManagerMode();
+  }
+
+  function renderMgrSheet3(panel, staffId, month) {
+    var g = DATA.goals[staffId];
+    function metaField(labelText, key, type) {
+      var wrap = el("div", { class: "field" });
+      wrap.appendChild(el("label", {}, [labelText]));
+      var input = el("input", { type: type || "text" });
+      input.value = g[key] || "";
+      input.addEventListener("input", debounce(function () { g[key] = input.value; saveData(); }, 250));
+      wrap.appendChild(input);
+      return wrap;
+    }
+    var metaCard = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["現在の状況"]),
+      el("div", { class: "card-body grid-2" }, [
+        metaField("現在のポジション", "position"),
+        metaField("目指すポジション", "targetPosition"),
+        metaField("開始月", "startMonth", "month")
+      ])
+    ]);
+    panel.appendChild(metaCard);
+
+    function goalField(labelText, key) {
+      var wrap = el("div", { class: "field" });
+      wrap.appendChild(el("label", {}, [labelText]));
+      var ta = el("textarea", {});
+      ta.value = g[key] || "";
+      ta.addEventListener("input", debounce(function () { g[key] = ta.value; saveData(); }, 250));
+      wrap.appendChild(ta);
+      return wrap;
+    }
+    var midCard = el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["A. 中期目標"]),
+      el("div", { class: "card-body" }, [
+        goalField("3ヶ月後の目標（技術・売上・指名・接客・店販）", "mid3"),
+        goalField("6ヶ月後の目標", "mid6"),
+        goalField("1年後の理想像／目指したい美容師像", "mid1y")
+      ])
+    ]);
+    panel.appendChild(midCard);
+
+    var tableCard = el("div", { class: "card" });
+    tableCard.appendChild(el("div", { class: "card-head" }, ["B. 毎月の進捗記録"]));
+    var tbody = el("tbody");
+    g.progress.forEach(function (row, idx) {
+      tbody.appendChild(el("tr", {}, [
+        el("td", { class: "month-cell" }, [monthLabel(row.month)]),
+        el("td", {}, [row.achieved || ""]),
+        el("td", {}, [row.issue || ""]),
+        el("td", {}, [row.nextGoal || ""]),
+        el("td", {}, [row.memo || ""]),
+        el("td", {}, [el("button", { class: "btn sm danger", onclick: function () {
+          if (confirm(monthLabel(row.month) + " の行を削除しますか？")) { g.progress.splice(idx, 1); saveData(); renderManagerMode(); }
+        } }, ["削除"])])
+      ]));
+    });
+    var tableWrap = el("div", { class: "table-wrap" }, [
+      el("table", { class: "progress" }, [
+        el("thead", {}, [el("tr", {}, [
+          el("th", {}, ["対象月"]), el("th", {}, ["達成できたこと"]), el("th", {}, ["課題"]),
+          el("th", {}, ["次月目標"]), el("th", {}, ["代表/店長メモ"]), el("th", {}, [""])
+        ])]),
+        tbody
+      ])
+    ]);
+    var tableBody = el("div", { class: "card-body" }, [
+      g.progress.length ? tableWrap : el("div", { class: "empty-note" }, ["まだ進捗記録がありません。②面談記録タブから「③目標管理表にこの内容を反映」で追加できます。"])
+    ]);
+    tableCard.appendChild(tableBody);
+    panel.appendChild(tableCard);
+  }
+
+  function renderMgrHistory(panel, staffId) {
+    var months = Object.keys(DATA.records[staffId] || {}).sort().reverse();
+    var card = el("div", { class: "card" });
+    card.appendChild(el("div", { class: "card-head" }, ["月次履歴"]));
+    var body = el("div", { class: "card-body" });
+    if (!months.length) body.appendChild(el("div", { class: "empty-note" }, ["まだ記録がありません。"]));
+    months.forEach(function (m) {
+      var status = recordStatus(staffId, m);
+      var row = el("div", { class: "btn-row", style: "justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)" }, [
+        el("div", {}, [el("strong", {}, [monthLabel(m)])]),
+        statusChip(status),
+        el("button", { class: "btn sm", onclick: function () { managerSelectedMonth = m; managerActiveTab = "sheet1"; renderManagerMode(); } }, ["開く"])
+      ]);
+      body.appendChild(row);
+    });
+    card.appendChild(body);
+    panel.appendChild(card);
+  }
+
+  /* ---------------- Import / backup flows ---------------- */
+  function importFlow() {
+    var input = el("input", { type: "file", accept: "application/json,.json", style: "display:none" });
+    input.addEventListener("change", function () {
+      var f = input.files && input.files[0];
+      if (!f) return;
+      readJsonFile(f, function (err, obj) {
+        if (err || !obj || obj.type !== "sheet1" || !obj.staffId || !obj.month) {
+          toast("ファイルの読み込みに失敗しました。①本人記入シートの書き出しファイルを選んでください。");
+          return;
+        }
+        if (!DATA.records[obj.staffId]) { toast("不明なスタッフのデータです。"); return; }
+        var rec = ensureMonthRecord(obj.staffId, obj.month);
+        rec.sheet1 = obj.sheet1;
+        saveData();
+        managerSelectedStaff = obj.staffId;
+        managerSelectedMonth = obj.month;
+        managerActiveTab = "sheet1";
+        toast((staffById(obj.staffId) || {}).name + "さんの" + monthLabel(obj.month) + "分を取り込みました");
+        renderManagerMode();
+      });
+    });
+    document.body.appendChild(input);
+    input.click();
+    setTimeout(function () { document.body.removeChild(input); }, 3000);
+  }
+
+  function backupExport() {
+    offerDownload("willows_pdca_backup_" + currentMonth() + ".json", { type: "full-backup", exportedAt: new Date().toISOString(), data: DATA });
+  }
+  function backupImportFlow() {
+    if (!confirm("全データ復元を行うと、現在この端末にあるデータは上書きされます。続けますか？")) return;
+    var input = el("input", { type: "file", accept: "application/json,.json", style: "display:none" });
+    input.addEventListener("change", function () {
+      var f = input.files && input.files[0];
+      if (!f) return;
+      readJsonFile(f, function (err, obj) {
+        if (err || !obj || obj.type !== "full-backup" || !obj.data) { toast("バックアップファイルとして読み込めませんでした。"); return; }
+        DATA = obj.data;
+        saveData();
+        toast("データを復元しました");
+        renderManagerMode();
+      });
+    });
+    document.body.appendChild(input);
+    input.click();
+    setTimeout(function () { document.body.removeChild(input); }, 3000);
+  }
+
+  /* ================= Role switching / init ================= */
+  function render() {
+    $("#roleStaffBtn").classList.toggle("active", UI.role === "staff");
+    $("#roleManagerBtn").classList.toggle("active", UI.role === "manager");
+    $("#subline").textContent = UI.role === "staff" ? "スタッフ入力モード" : "代表・店長 管理モード";
+    if (UI.role === "staff") renderStaffMode();
+    else renderManagerMode();
+  }
+  $("#roleStaffBtn").addEventListener("click", function () { UI.role = "staff"; saveUI(); render(); });
+  $("#roleManagerBtn").addEventListener("click", function () { UI.role = "manager"; saveUI(); render(); });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
