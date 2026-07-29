@@ -149,6 +149,7 @@
       <div class="brand">
         <div class="name">WILLOW'S 棚卸しアプリ</div>
         <div class="sub" id="subline">在庫数を数えて入力するだけ</div>
+        <div class="sub" id="syncStatus" style="margin-top:2px;font-weight:700"></div>
       </div>
       <button class="icon-btn" id="helpBtn">?</button>
     </div>
@@ -163,12 +164,26 @@
 <div id="modalLayer"></div>
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
 (function () {
   "use strict";
   var STORE_KEY = "willows_inv_v2";
   var UI_KEY = "willows_inv_ui_v2";
   var OLD_STORE_KEY = "willows_inv_v1";
+
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCy-NbBSmKX4P8T064esI9W5c1x8cb1B5c",
+    authDomain: "willows-inventory.firebaseapp.com",
+    projectId: "willows-inventory",
+    storageBucket: "willows-inventory.firebasestorage.app",
+    messagingSenderId: "938770910240",
+    appId: "1:938770910240:web:0535d56ee1e07127ad4045"
+  };
+  var db = null;
+  var dataReady = false;
+  var lastFromCache = false;
 
   function defaultData() {
     return {
@@ -210,7 +225,7 @@
     } catch (e) { return null; }
   }
 
-  function loadData() {
+  function loadLocalSeed() {
     try {
       var raw = localStorage.getItem(STORE_KEY);
       if (raw) {
@@ -222,14 +237,28 @@
       }
       var migrated = migrateFromV1();
       if (migrated) return migrated;
-      return defaultData();
-    } catch (e) { return defaultData(); }
+      return null;
+    } catch (e) { return null; }
   }
-  function saveData() { localStorage.setItem(STORE_KEY, JSON.stringify(DATA)); }
+  function normalizeData(d) {
+    d = d || {};
+    if (!d.categories || !d.categories.length) d.categories = defaultData().categories;
+    if (!d.items) d.items = [];
+    if (!d.months) d.months = {};
+    return d;
+  }
+  // saveData() pushes the whole DATA object to Firestore; every connected
+  // device (PC, iPhone, ...) receives the update automatically via onSnapshot.
+  function saveData() {
+    if (!db) return;
+    db.collection("willows_inventory").doc("data").set(DATA).catch(function (e) {
+      toast("保存できませんでした（オフラインなら接続後に自動送信されます）");
+    });
+  }
   function loadUI() { try { return JSON.parse(localStorage.getItem(UI_KEY)) || {}; } catch (e) { return {}; } }
   function saveUI() { localStorage.setItem(UI_KEY, JSON.stringify(UI)); }
 
-  var DATA = loadData();
+  var DATA = defaultData();
   var UI = loadUI();
   if (!UI.tab) UI.tab = "count";
   if (!UI.countCat) UI.countCat = DATA.categories[0] ? DATA.categories[0].id : null;
@@ -757,7 +786,50 @@
   $("#tabMaster").addEventListener("click", function () { UI.tab = "master"; saveUI(); render(); });
   $("#tabHistory").addEventListener("click", function () { UI.tab = "history"; saveUI(); render(); });
 
-  render();
+  function updateSyncStatus() {
+    var el2 = $("#syncStatus");
+    if (!el2) return;
+    if (!dataReady) { el2.textContent = "読み込み中…"; el2.style.color = "#cfe0ea"; return; }
+    if (lastFromCache) { el2.textContent = "🟡 オフライン（接続時に自動同期）"; el2.style.color = "#e8d08a"; }
+    else { el2.textContent = "🟢 オンライン同期中"; el2.style.color = "#bff0d3"; }
+  }
+
+  function bootstrapFirebase() {
+    $("#main").innerHTML = "";
+    $("#main").appendChild(el("div", { class: "empty-note" }, ["データを読み込んでいます…"]));
+    updateSyncStatus();
+    try {
+      firebase.initializeApp(FIREBASE_CONFIG);
+      db = firebase.firestore();
+      try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
+      var docRef = db.collection("willows_inventory").doc("data");
+      docRef.get().then(function (snap) {
+        if (!snap.exists) {
+          var seed = loadLocalSeed() || defaultData();
+          docRef.set(seed).catch(function (e) { toast("初期データの作成に失敗しました：" + e.message); });
+        }
+      });
+      docRef.onSnapshot(function (snap) {
+        if (snap.metadata.hasPendingWrites) { lastFromCache = snap.metadata.fromCache; updateSyncStatus(); return; }
+        lastFromCache = snap.metadata.fromCache;
+        if (snap.exists) {
+          DATA = normalizeData(snap.data());
+          dataReady = true;
+          if (!DATA.categories.find(function (c) { return c.id === UI.countCat; })) UI.countCat = DATA.categories[0] ? DATA.categories[0].id : null;
+          if (!DATA.categories.find(function (c) { return c.id === UI.masterCat; })) UI.masterCat = DATA.categories[0] ? DATA.categories[0].id : null;
+          render();
+          updateSyncStatus();
+        }
+      }, function (err) {
+        toast("同期エラー：" + err.message);
+      });
+    } catch (e) {
+      $("#main").innerHTML = "";
+      $("#main").appendChild(el("div", { class: "empty-note" }, ["データベースへの接続に失敗しました：" + e.message]));
+    }
+  }
+
+  bootstrapFirebase();
 })();
 </script>
 
