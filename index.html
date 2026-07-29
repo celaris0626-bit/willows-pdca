@@ -292,6 +292,7 @@
     { id: "sato", name: "佐藤", position: "Jrスタイリスト" }
   ];
 
+  var MANAGER_PIN = "0124";
   var STORE_KEY = "willows_pdca_v1";
   var UI_KEY = "willows_pdca_ui_v1";
 
@@ -329,6 +330,13 @@
   var DATA = loadData();
   var UI = loadUI();
   if (!UI.role) UI.role = "staff";
+  // Force re-authentication on any device that previously self-set a PIN
+  // other than the fixed MANAGER_PIN (old per-device "first entry sets the PIN" behavior).
+  if (UI.managerPin && UI.managerPin !== MANAGER_PIN) {
+    UI.managerUnlocked = false;
+    delete UI.managerPin;
+    saveUI();
+  }
 
   /* ---------------- Helpers ---------------- */
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -630,11 +638,9 @@
   function isManagerUnlocked() { return UI.managerUnlocked === true; }
 
   function promptPin() {
-    var hasPin = !!UI.managerPin;
     var entered = "";
     var body = el("div", {});
-    body.appendChild(el("h3", {}, [hasPin ? "管理者PINを入力" : "管理者PINを設定"]));
-    if (!hasPin) body.appendChild(el("p", {}, ["この端末で使う4桁のPINを決めてください（簡易ロックです。厳密なセキュリティではありません）。"]));
+    body.appendChild(el("h3", {}, ["管理者PINを入力"]));
     var dots = el("div", { class: "pin-dots" }, [0, 1, 2, 3].map(function () { return el("span", {}); }));
     body.appendChild(dots);
     var errNote = el("p", { style: "color:var(--red-600);min-height:18px;font-size:12.5px;text-align:center" }, [""]);
@@ -647,11 +653,7 @@
       if (entered.length >= 4) return;
       entered += d; updateDots();
       if (entered.length === 4) {
-        if (!hasPin) {
-          UI.managerPin = entered; saveUI();
-          UI.managerUnlocked = true; saveUI();
-          closeModal(); renderManagerMode();
-        } else if (entered === UI.managerPin) {
+        if (entered === MANAGER_PIN) {
           UI.managerUnlocked = true; saveUI();
           closeModal(); renderManagerMode();
         } else {
@@ -667,11 +669,8 @@
       } }, [k]));
     });
     body.appendChild(keypad);
-    body.appendChild(el("div", { class: "btn-row", style: "margin-top:12px;justify-content:space-between" }, [
-      el("button", { class: "btn ghost", onclick: function () { closeModal(); UI.role = "staff"; saveUI(); render(); } }, ["キャンセル"]),
-      hasPin ? el("button", { class: "btn sm ghost", onclick: function () {
-        if (confirm("PINをリセットしますか？（次回入力時に新しいPINを設定します）")) { delete UI.managerPin; saveUI(); closeModal(); promptPin(); }
-      } }, ["PINを忘れた場合"]) : el("span", {})
+    body.appendChild(el("div", { class: "btn-row", style: "margin-top:12px;justify-content:flex-end" }, [
+      el("button", { class: "btn ghost", onclick: function () { closeModal(); UI.role = "staff"; saveUI(); render(); } }, ["キャンセル"])
     ]));
     openModal(body);
   }
