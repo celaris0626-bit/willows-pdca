@@ -268,6 +268,7 @@
       <div class="brand">
         <div class="name">WILLOW'S 育成PDCAシート</div>
         <div class="sub" id="subline">スタッフ育成ミーティング・電子版</div>
+        <div class="sub" id="syncStatus" style="margin-top:2px;font-weight:700"></div>
       </div>
       <button class="help-btn" id="helpBtn" title="使い方">?</button>
     </div>
@@ -282,6 +283,8 @@
 <div id="modalLayer"></div>
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script>
 (function () {
   "use strict";
@@ -293,10 +296,25 @@
   ];
 
   var MANAGER_PIN = "0124";
-  var STORE_KEY = "willows_pdca_v1";
   var UI_KEY = "willows_pdca_ui_v1";
+  var LEGACY_STORE_KEY = "willows_pdca_v1"; // pre-Firebase per-device data, used only as a one-time seed
 
-  /* ---------------- Storage layer ---------------- */
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCy-NbBSmKX4P8T064esI9W5c1x8cb1B5c",
+    authDomain: "willows-inventory.firebaseapp.com",
+    projectId: "willows-inventory",
+    storageBucket: "willows-inventory.firebasestorage.app",
+    messagingSenderId: "938770910240",
+    appId: "1:938770910240:web:0535d56ee1e07127ad4045"
+  };
+  var db = null;
+  var dataReady = false;
+  var lastFromCache = false;
+  var activeUnsub = null;
+  var currentListenerKey = null;
+  var managerLocalPushed = false;
+
+  /* ---------------- Data shape ---------------- */
   function emptyData() {
     var records = {}, goals = {};
     STAFF.forEach(function (s) {
@@ -305,29 +323,25 @@
     });
     return { records: records, goals: goals };
   }
-
-  function loadData() {
-    try {
-      var raw = localStorage.getItem(STORE_KEY);
-      if (!raw) return emptyData();
-      var parsed = JSON.parse(raw);
-      var base = emptyData();
-      STAFF.forEach(function (s) {
-        if (parsed.records && parsed.records[s.id]) base.records[s.id] = parsed.records[s.id];
-        if (parsed.goals && parsed.goals[s.id]) base.goals[s.id] = Object.assign(base.goals[s.id], parsed.goals[s.id]);
-      });
-      return base;
-    } catch (e) { return emptyData(); }
+  function emptyGoalsFor(staffId) {
+    var s = staffById(staffId) || {};
+    return { position: s.position || "", targetPosition: "", startMonth: "", mid3: "", mid6: "", mid1y: "", progress: [] };
   }
 
-  function saveData() { localStorage.setItem(STORE_KEY, JSON.stringify(DATA)); }
+  function loadLocalLegacy() {
+    try {
+      var raw = localStorage.getItem(LEGACY_STORE_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) { return null; }
+  }
 
   function loadUI() {
     try { return JSON.parse(localStorage.getItem(UI_KEY)) || {}; } catch (e) { return {}; }
   }
   function saveUI() { localStorage.setItem(UI_KEY, JSON.stringify(UI)); }
 
-  var DATA = loadData();
+  var DATA = emptyData();
   var UI = loadUI();
   if (!UI.role) UI.role = "staff";
   // Force re-authentication on any device that previously self-set a PIN
@@ -386,6 +400,98 @@
     return el("span", { class: "chip teal" }, ["面談済み"]);
   }
 
+  /* ---------------- Firestore sync layer ---------------- */
+  function staffDocRef(staffId) { return db.collection("willows_pdca_staff").doc(staffId); }
+
+  function updateSyncStatus() {
+    var el2 = $("#syncStatus");
+    if (!el2) return;
+    if (!dataReady) { el2.textContent = "読み込み中…"; el2.style.color = "#cfe0ea"; return; }
+    if (lastFromCache) { el2.textContent = "🟡 オフライン（接続時に自動同期）"; el2.style.color = "#e8d08a"; }
+    else { el2.textContent = "🟢 オンライン同期中"; el2.style.color = "#bff0d3"; }
+  }
+
+  function saveStaffSheet1(staffId, month, sheet1) {
+    var patch = { records: {} };
+    patch.records[month] = { sheet1: sheet1 };
+    staffDocRef(staffId).set(patch, { merge: true }).catch(function (e) { toast("保存に失敗しました：" + e.message); });
+  }
+  function saveManagerSheet2(staffId, month, sheet2) {
+    var patch = { records: {} };
+    patch.records[month] = { sheet2: sheet2 };
+    staffDocRef(staffId).set(patch, { merge: true }).catch(function (e) { toast("保存に失敗しました：" + e.message); });
+  }
+  function saveManagerGoals(staffId, goals) {
+    staffDocRef(staffId).set({ goals: goals }, { merge: true }).catch(function (e) { toast("保存に失敗しました：" + e.message); });
+  }
+
+  function attachStaffListener(staffId, onFirstReady) {
+    var ref = staffDocRef(staffId);
+    ref.get().then(function (snap) {
+      if (!snap.exists) {
+        // First time this staff member's phone connects: seed the cloud with
+        // whatever sheet1 data already exists locally on this device only.
+        var legacy = loadLocalLegacy();
+        var localRec = (legacy && legacy.records && legacy.records[staffId]) || {};
+        var recordsSeed = {};
+        Object.keys(localRec).forEach(function (m) {
+          if (localRec[m] && localRec[m].sheet1) recordsSeed[m] = { sheet1: localRec[m].sheet1 };
+        });
+        if (Object.keys(recordsSeed).length) ref.set({ records: recordsSeed }, { merge: true }).catch(function () {});
+      }
+    });
+    activeUnsub = ref.onSnapshot(function (snap) {
+      lastFromCache = snap.metadata.fromCache;
+      if (snap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
+      var d = snap.data() || {};
+      DATA.records[staffId] = d.records || {};
+      DATA.goals[staffId] = Object.assign(emptyGoalsFor(staffId), d.goals || {});
+      var firstTime = !dataReady;
+      dataReady = true;
+      updateSyncStatus();
+      if (firstTime && onFirstReady) onFirstReady();
+      else if (UI.role === "staff" && UI.staffSelf === staffId) renderStaffMode();
+    }, function (err) { toast("同期エラー：" + err.message); });
+  }
+
+  function attachManagerListener(onFirstReady) {
+    var col = db.collection("willows_pdca_staff");
+    if (!managerLocalPushed) {
+      managerLocalPushed = true;
+      var legacy = loadLocalLegacy();
+      if (legacy) {
+        STAFF.forEach(function (s) {
+          var localRec = (legacy.records && legacy.records[s.id]) || {};
+          var recordsSeed = {};
+          Object.keys(localRec).forEach(function (m) {
+            if (localRec[m] && localRec[m].sheet2) recordsSeed[m] = { sheet2: localRec[m].sheet2 };
+          });
+          var patch = {};
+          if (Object.keys(recordsSeed).length) patch.records = recordsSeed;
+          var localGoals = (legacy.goals && legacy.goals[s.id]) || null;
+          if (localGoals) patch.goals = localGoals;
+          if (Object.keys(patch).length) col.doc(s.id).set(patch, { merge: true }).catch(function () {});
+        });
+      }
+    }
+    activeUnsub = col.onSnapshot(function (querySnap) {
+      lastFromCache = querySnap.metadata.fromCache;
+      if (querySnap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
+      querySnap.forEach(function (doc) {
+        var id = doc.id;
+        if (!staffById(id)) return;
+        var d = doc.data() || {};
+        DATA.records[id] = d.records || {};
+        DATA.goals[id] = Object.assign(emptyGoalsFor(id), d.goals || {});
+      });
+      var firstTime = !dataReady;
+      dataReady = true;
+      updateSyncStatus();
+      if (firstTime && onFirstReady) onFirstReady();
+      else if (UI.role === "manager" && isManagerUnlocked()) renderManagerMode();
+    }, function (err) { toast("同期エラー：" + err.message); });
+  }
+
   /* ---------------- Download / import ---------------- */
   function offerDownload(filename, obj) {
     try {
@@ -427,15 +533,15 @@
     body.appendChild(el("p", {}, [
       "このアプリはWILLOW'Sのスタッフ育成ミーティングシート（本人記入・面談記録・個人目標管理）を、紙の代わりにスマホやPCで記入するためのものです。"
     ]));
-    body.appendChild(el("p", {}, ["【重要】このアプリはスタッフ同士・店長とリアルタイムには自動同期しません。データは各自の端末（ブラウザ）の中に保存されます。次の流れで運用してください："]));
+    body.appendChild(el("p", {}, ["記入した内容は自動でクラウドに保存され、店長・代表の画面にもリアルタイムで反映されます。LINEでファイルを送る必要はありません。"]));
     var ol = el("ol", {}, [
-      el("li", {}, ["スタッフは「スタッフ入力」で①本人記入シートを記入し、「提出する」を押す"]),
-      el("li", {}, ["「ファイルを書き出す」でJSONファイルを保存し、LINE等で店長に送る（またはミーティング時にその場でスマホ画面を見せてもよい）"]),
-      el("li", {}, ["店長は「代表・店長（管理）」で該当スタッフを開き、届いたJSONファイルを「インポート」する"]),
+      el("li", {}, ["スタッフは初回だけ自分の名前を選ぶと、以後その端末は自分専用になります（他の人の記入内容はこの端末からは見えません）"]),
+      el("li", {}, ["「スタッフ入力」で①本人記入シートに記入する（自動保存・自動反映）"]),
+      el("li", {}, ["店長は「代表・店長（管理）」でPINを入力し、各スタッフの提出内容をリアルタイムで確認する"]),
       el("li", {}, ["面談中に②面談記録を入力し、③個人目標管理に反映する"])
     ]);
     body.appendChild(ol);
-    body.appendChild(el("p", {}, ["管理者データは端末のブラウザに保存されるため、機種変更前には「全データ書き出し」でバックアップを取ってください。"]));
+    body.appendChild(el("p", {}, ["画面上部の「🟢オンライン同期中」の表示で、正しく同期できているか確認できます。「全データ書き出し」は念のためのバックアップ用です。"]));
     body.appendChild(el("div", { class: "btn-row", style: "margin-top:8px;justify-content:flex-end" }, [
       el("button", { class: "btn primary", onclick: closeModal }, ["閉じる"])
     ]));
@@ -444,6 +550,27 @@
   $("#helpBtn").addEventListener("click", showHelp);
 
   /* ================= STAFF MODE ================= */
+  function renderStaffIdentityGate() {
+    var main = $("#main");
+    main.innerHTML = "";
+    var body = el("div", { class: "card-body" }, [
+      el("p", { style: "font-size:13.5px;color:var(--ink-500);margin:0" }, [
+        "一度選ぶと、この端末（このスマホ）は選んだ人専用になります。他の人が記入した内容は、この端末からは見えません。ご自身の名前を選んでください。"
+      ])
+    ]);
+    STAFF.forEach(function (s) {
+      body.appendChild(el("button", { class: "btn navy", style: "width:100%;text-align:left;padding:14px 16px", onclick: function () {
+        if (!confirm(s.name + "さんとしてこの端末を使いますか？")) return;
+        UI.staffSelf = s.id; UI.staffIdentityConfirmed = true; saveUI();
+        render();
+      } }, [s.name + "（" + s.position + "）"]));
+    });
+    main.appendChild(el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["はじめに：あなたの名前を選んでください"]),
+      body
+    ]));
+  }
+
   function renderStaffMode() {
     var main = $("#main");
     main.innerHTML = "";
@@ -454,10 +581,12 @@
     var picker = el("div", { class: "picker-row" });
     var nameField = el("div", { class: "field" }, [
       el("label", {}, ["あなたの名前"]),
+      el("div", { style: "font-weight:700;font-size:15px;padding:9px 0" }, [staffById(staffId).name + "（" + staffById(staffId).position + "）"]),
+      el("button", { class: "btn ghost sm", style: "align-self:flex-start;padding:2px 0", onclick: function () {
+        if (!confirm("この端末の担当者を変更しますか？（誤って他の人の分を触らないよう、変更は必要な時だけにしてください）")) return;
+        UI.staffIdentityConfirmed = false; delete UI.staffSelf; saveUI(); render();
+      } }, ["別の人として使う"])
     ]);
-    var select = el("select", { onchange: function (e) { UI.staffSelf = e.target.value; saveUI(); renderStaffMode(); } },
-      STAFF.map(function (s) { return el("option", { value: s.id, selected: s.id === staffId ? "selected" : null }, [s.name + "（" + s.position + "）"]); }));
-    nameField.appendChild(select);
     picker.appendChild(nameField);
 
     var monthField = el("div", { class: "field" }, [el("label", {}, ["対象月"])]);
@@ -511,7 +640,7 @@
         input.value = s1[key] || "";
       }
       input.addEventListener("input", debounce(function () {
-        s1[key] = input.value; rec.sheet1 = s1; saveData();
+        s1[key] = input.value; rec.sheet1 = s1; saveStaffSheet1(staffId, month, s1);
       }, 250));
       wrap.appendChild(input);
       return wrap;
@@ -538,7 +667,7 @@
     for (var i = 1; i <= 10; i++) {
       (function (n) {
         var b = el("button", { type: "button", onclick: function () {
-          s1.c_motivation = n; rec.sheet1 = s1; saveData();
+          s1.c_motivation = n; rec.sheet1 = s1; saveStaffSheet1(staffId, month, s1);
           $all(".scale10 button", scale).forEach(function (x) { x.classList.remove("sel"); });
           b.classList.add("sel");
         } }, [String(n)]);
@@ -578,18 +707,16 @@
     [cardA, cardB, cardC, cardD].forEach(function (c) { main.appendChild(c); });
 
     var bar = el("div", { class: "actionbar" });
-    bar.appendChild(el("div", { class: "status-note" }, [submitted ? "提出済みです。修正して再提出もできます。" : "記入内容は自動で下書き保存されます"]));
+    bar.appendChild(el("div", { class: "status-note" }, [submitted ? "提出済みです。修正して再提出もできます。" : "記入内容は自動で店長にも同期されます"]));
     bar.appendChild(el("button", { class: "btn", onclick: function () {
       copySummaryToClipboard(staffId, month);
     } }, ["テキストをコピー"]));
     bar.appendChild(el("button", { class: "btn primary", onclick: function () {
       s1.submittedAt = new Date().toISOString();
-      rec.sheet1 = s1; saveData();
-      var name = staffById(staffId).name;
-      offerDownload("willows_honnin_" + name + "_" + month + ".json", { type: "sheet1", staffId: staffId, staffName: name, month: month, sheet1: s1 });
-      toast("提出しました。ファイルを店長に送ってください。");
+      rec.sheet1 = s1; saveStaffSheet1(staffId, month, s1);
+      toast("提出しました。店長にも自動で反映されます。");
       renderStaffMode();
-    } }, [submitted ? "再提出してファイル書き出し" : "提出する（ファイル書き出し）"]));
+    } }, [submitted ? "再提出する" : "提出する"]));
 
     var oldBar = $all(".actionbar", main);
     main.appendChild(bar);
@@ -655,7 +782,7 @@
       if (entered.length === 4) {
         if (entered === MANAGER_PIN) {
           UI.managerUnlocked = true; saveUI();
-          closeModal(); renderManagerMode();
+          closeModal(); render();
         } else {
           errNote.textContent = "PINが違います";
           entered = ""; updateDots();
@@ -744,7 +871,7 @@
     card.appendChild(el("div", { class: "card-head" }, ["①本人記入シート（" + monthLabel(month) + "）"]));
     var body = el("div", { class: "card-body" });
     if (!s1) {
-      body.appendChild(el("div", { class: "empty-note" }, ["この月の本人記入データがまだありません。スタッフから受け取ったJSONファイルを「①本人記入をインポート」から読み込んでください。"]));
+      body.appendChild(el("div", { class: "empty-note" }, ["この月の本人記入データがまだありません（スタッフが入力すると自動的にここに反映されます）。ファイルで受け取った場合は「①本人記入をインポート」からも読み込めます。"]));
     } else {
       var rows = [
         ["1. 成長したこと", s1.a1], ["2. うまくいかなかったこと", s1.a2], ["3. 今の課題", s1.a3],
@@ -773,7 +900,7 @@
       wrap.appendChild(el("label", {}, [labelText]));
       var input = opts.textarea ? el("textarea", {}) : el("input", { type: opts.type || "text" });
       input.value = s2[key] || "";
-      input.addEventListener("input", debounce(function () { s2[key] = input.value; rec.sheet2 = s2; saveData(); }, 250));
+      input.addEventListener("input", debounce(function () { s2[key] = input.value; rec.sheet2 = s2; saveManagerSheet2(staffId, month, s2); }, 250));
       wrap.appendChild(input);
       return wrap;
     }
@@ -818,7 +945,7 @@
 
     var actions = el("div", { class: "btn-row" }, [
       el("button", { class: "btn primary", onclick: function () {
-        s2.savedAt = new Date().toISOString(); rec.sheet2 = s2; saveData();
+        s2.savedAt = new Date().toISOString(); rec.sheet2 = s2; saveManagerSheet2(staffId, month, s2);
         toast("面談記録を保存しました");
         renderManagerMode();
       } }, ["面談記録を保存"]),
@@ -838,7 +965,7 @@
       g.progress.push(row);
       g.progress.sort(function (a, b) { return a.month < b.month ? -1 : 1; });
     }
-    saveData();
+    saveManagerGoals(staffId, g);
     toast("③目標管理表に反映しました");
     managerActiveTab = "sheet3";
     renderManagerMode();
@@ -851,7 +978,7 @@
       wrap.appendChild(el("label", {}, [labelText]));
       var input = el("input", { type: type || "text" });
       input.value = g[key] || "";
-      input.addEventListener("input", debounce(function () { g[key] = input.value; saveData(); }, 250));
+      input.addEventListener("input", debounce(function () { g[key] = input.value; saveManagerGoals(staffId, g); }, 250));
       wrap.appendChild(input);
       return wrap;
     }
@@ -870,7 +997,7 @@
       wrap.appendChild(el("label", {}, [labelText]));
       var ta = el("textarea", {});
       ta.value = g[key] || "";
-      ta.addEventListener("input", debounce(function () { g[key] = ta.value; saveData(); }, 250));
+      ta.addEventListener("input", debounce(function () { g[key] = ta.value; saveManagerGoals(staffId, g); }, 250));
       wrap.appendChild(ta);
       return wrap;
     }
@@ -895,7 +1022,7 @@
         el("td", {}, [row.nextGoal || ""]),
         el("td", {}, [row.memo || ""]),
         el("td", {}, [el("button", { class: "btn sm danger", onclick: function () {
-          if (confirm(monthLabel(row.month) + " の行を削除しますか？")) { g.progress.splice(idx, 1); saveData(); renderManagerMode(); }
+          if (confirm(monthLabel(row.month) + " の行を削除しますか？")) { g.progress.splice(idx, 1); saveManagerGoals(staffId, g); renderManagerMode(); }
         } }, ["削除"])])
       ]));
     });
@@ -948,7 +1075,7 @@
         if (!DATA.records[obj.staffId]) { toast("不明なスタッフのデータです。"); return; }
         var rec = ensureMonthRecord(obj.staffId, obj.month);
         rec.sheet1 = obj.sheet1;
-        saveData();
+        saveStaffSheet1(obj.staffId, obj.month, obj.sheet1);
         managerSelectedStaff = obj.staffId;
         managerSelectedMonth = obj.month;
         managerActiveTab = "sheet1";
@@ -973,8 +1100,11 @@
       readJsonFile(f, function (err, obj) {
         if (err || !obj || obj.type !== "full-backup" || !obj.data) { toast("バックアップファイルとして読み込めませんでした。"); return; }
         DATA = obj.data;
-        saveData();
-        toast("データを復元しました");
+        STAFF.forEach(function (s) {
+          var patch = { records: (obj.data.records && obj.data.records[s.id]) || {}, goals: (obj.data.goals && obj.data.goals[s.id]) || emptyGoalsFor(s.id) };
+          staffDocRef(s.id).set(patch).catch(function (e) { toast(s.name + "さんの復元に失敗しました：" + e.message); });
+        });
+        toast("データを復元し、クラウドにも反映しました");
         renderManagerMode();
       });
     });
@@ -984,16 +1114,50 @@
   }
 
   /* ================= Role switching / init ================= */
+  function showLoading() {
+    $("#main").innerHTML = "";
+    $("#main").appendChild(el("div", { class: "empty-note" }, ["データを読み込んでいます…"]));
+  }
+
   function render() {
     $("#roleStaffBtn").classList.toggle("active", UI.role === "staff");
     $("#roleManagerBtn").classList.toggle("active", UI.role === "manager");
     $("#subline").textContent = UI.role === "staff" ? "スタッフ入力モード" : "代表・店長 管理モード";
-    if (UI.role === "staff") renderStaffMode();
-    else renderManagerMode();
+
+    if (UI.role === "staff") {
+      if (!UI.staffIdentityConfirmed || !UI.staffSelf) { renderStaffIdentityGate(); return; }
+      var key = "staff:" + UI.staffSelf;
+      if (currentListenerKey !== key) {
+        if (activeUnsub) { activeUnsub(); activeUnsub = null; }
+        currentListenerKey = key; dataReady = false;
+        showLoading(); updateSyncStatus();
+        attachStaffListener(UI.staffSelf, function () { renderStaffMode(); });
+        return;
+      }
+      if (!dataReady) { showLoading(); return; }
+      renderStaffMode();
+    } else {
+      if (!isManagerUnlocked()) {
+        if (activeUnsub) { activeUnsub(); activeUnsub = null; currentListenerKey = null; }
+        promptPin(); $("#main").innerHTML = ""; return;
+      }
+      if (currentListenerKey !== "manager") {
+        if (activeUnsub) { activeUnsub(); activeUnsub = null; }
+        currentListenerKey = "manager"; dataReady = false;
+        showLoading(); updateSyncStatus();
+        attachManagerListener(function () { renderManagerMode(); });
+        return;
+      }
+      if (!dataReady) { showLoading(); return; }
+      renderManagerMode();
+    }
   }
   $("#roleStaffBtn").addEventListener("click", function () { UI.role = "staff"; saveUI(); render(); });
   $("#roleManagerBtn").addEventListener("click", function () { UI.role = "manager"; saveUI(); render(); });
 
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.firestore();
+  try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
   render();
 })();
 </script>
