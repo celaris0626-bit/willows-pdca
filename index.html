@@ -478,7 +478,6 @@
   }
 
   function attachManagerListener(onFirstReady) {
-    var col = db.collection("willows_pdca_staff");
     if (!managerLocalPushed) {
       managerLocalPushed = true;
       var legacy = loadLocalLegacy();
@@ -493,49 +492,62 @@
           if (Object.keys(recordsSeed).length) patch.records = recordsSeed;
           var localGoals = (legacy.goals && legacy.goals[s.id]) || null;
           if (localGoals) patch.goals = localGoals;
-          if (Object.keys(patch).length) col.doc(s.id).set(patch, { merge: true }).catch(function () {});
+          if (Object.keys(patch).length) staffDocRef(s.id).set(patch, { merge: true }).catch(function () {});
         });
       }
     }
-    var settled = false;
-    activeUnsub = col.onSnapshot(function (querySnap) {
-      settled = true;
-      lastFromCache = querySnap.metadata.fromCache;
-      if (querySnap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
-      querySnap.forEach(function (doc) {
-        var id = doc.id;
-        if (!staffById(id)) return;
-        var d = doc.data() || {};
-        DATA.records[id] = d.records || {};
-        DATA.goals[id] = Object.assign(emptyGoalsFor(id), d.goals || {});
-      });
-      var firstTime = !dataReady;
+
+    // Listen to each staff member's own document individually (same proven
+    // pattern as staff mode / the inventory app) instead of a single
+    // collection-level query, which appears to hang on some networks.
+    var unsubs = [];
+    var loadedCount = 0;
+    var announced = false;
+    function maybeAnnounce() {
+      if (announced || loadedCount < STAFF.length) return;
+      announced = true;
       dataReady = true;
       updateSyncStatus();
-      if (firstTime && onFirstReady) onFirstReady();
-      else if (UI.role === "manager" && isManagerUnlocked()) renderManagerMode();
-    }, function (err) {
-      settled = true;
-      toast("同期エラー：" + err.message);
-      if (!dataReady) showLoadError("データの読み込みでエラーが発生しました。（エラー内容：" + err.code + " " + err.message + "）このメッセージのスクリーンショットを送ってください。");
-    });
-    setTimeout(function () {
-      if (settled || dataReady) return;
-      col.get().then(function (querySnap) {
-        if (settled || dataReady) return;
-        querySnap.forEach(function (doc) {
-          var id = doc.id;
-          if (!staffById(id)) return;
-          var d = doc.data() || {};
-          DATA.records[id] = d.records || {};
-          DATA.goals[id] = Object.assign(emptyGoalsFor(id), d.goals || {});
-        });
-        lastFromCache = false;
-        dataReady = true;
+      if (onFirstReady) onFirstReady();
+    }
+
+    STAFF.forEach(function (s) {
+      var got = false, settled = false;
+      var unsub = staffDocRef(s.id).onSnapshot(function (snap) {
+        settled = true;
+        lastFromCache = snap.metadata.fromCache;
+        if (snap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
+        var d = snap.data() || {};
+        DATA.records[s.id] = d.records || {};
+        DATA.goals[s.id] = Object.assign(emptyGoalsFor(s.id), d.goals || {});
+        if (!got) { got = true; loadedCount++; }
         updateSyncStatus();
-        if (onFirstReady) onFirstReady();
-      }).catch(function () {});
-    }, 5000);
+        if (!announced) maybeAnnounce();
+        else if (UI.role === "manager" && isManagerUnlocked()) renderManagerMode();
+      }, function (err) {
+        settled = true;
+        toast(s.name + "さんの同期エラー：" + err.message);
+        if (!got) { got = true; loadedCount++; maybeAnnounce(); }
+      });
+      unsubs.push(unsub);
+      setTimeout(function () {
+        if (settled || got) return;
+        staffDocRef(s.id).get().then(function (snap) {
+          if (settled || got) return;
+          var d = (snap.exists ? snap.data() : {}) || {};
+          DATA.records[s.id] = d.records || {};
+          DATA.goals[s.id] = Object.assign(emptyGoalsFor(s.id), d.goals || {});
+          got = true; loadedCount++;
+          lastFromCache = false;
+          updateSyncStatus();
+          maybeAnnounce();
+        }).catch(function () {
+          if (!got) { got = true; loadedCount++; maybeAnnounce(); }
+        });
+      }, 5000);
+    });
+
+    activeUnsub = function () { unsubs.forEach(function (u) { if (u) u(); }); };
   }
 
   /* ---------------- Download / import ---------------- */
