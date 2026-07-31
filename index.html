@@ -451,7 +451,10 @@
       updateSyncStatus();
       if (firstTime && onFirstReady) onFirstReady();
       else if (UI.role === "staff" && UI.staffSelf === staffId) renderStaffMode();
-    }, function (err) { toast("同期エラー：" + err.message); });
+    }, function (err) {
+      toast("同期エラー：" + err.message);
+      if (!dataReady) showLoadError("データの読み込みでエラーが発生しました。（エラー内容：" + err.code + " " + err.message + "）このメッセージのスクリーンショットを送ってください。");
+    });
   }
 
   function attachManagerListener(onFirstReady) {
@@ -489,7 +492,10 @@
       updateSyncStatus();
       if (firstTime && onFirstReady) onFirstReady();
       else if (UI.role === "manager" && isManagerUnlocked()) renderManagerMode();
-    }, function (err) { toast("同期エラー：" + err.message); });
+    }, function (err) {
+      toast("同期エラー：" + err.message);
+      if (!dataReady) showLoadError("データの読み込みでエラーが発生しました。（エラー内容：" + err.code + " " + err.message + "）このメッセージのスクリーンショットを送ってください。");
+    });
   }
 
   /* ---------------- Download / import ---------------- */
@@ -1155,10 +1161,29 @@
   $("#roleStaffBtn").addEventListener("click", function () { UI.role = "staff"; saveUI(); render(); });
   $("#roleManagerBtn").addEventListener("click", function () { UI.role = "manager"; saveUI(); render(); });
 
-  firebase.initializeApp(FIREBASE_CONFIG);
-  db = firebase.firestore();
-  try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
-  render();
+  function showLoadError(message) {
+    $("#main").innerHTML = "";
+    $("#main").appendChild(el("div", { class: "card" }, [
+      el("div", { class: "card-head" }, ["読み込みできませんでした"]),
+      el("div", { class: "card-body" }, [
+        el("div", { class: "empty-note" }, [message]),
+        el("button", { class: "btn primary", onclick: function () { location.reload(); } }, ["もう一度試す"])
+      ])
+    ]));
+  }
+
+  try {
+    if (typeof firebase === "undefined") throw new Error("Firebaseの読み込みに失敗しました（通信環境をご確認ください）");
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db = firebase.firestore();
+    try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
+    render();
+    setTimeout(function () {
+      if (!dataReady) showLoadError("読み込みに時間がかかりすぎています。電波の良い場所でもう一度お試しください。（エラー内容：タイムアウト）");
+    }, 12000);
+  } catch (e) {
+    showLoadError("初期化に失敗しました：" + e.message);
+  }
 })();
 </script>
 
