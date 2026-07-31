@@ -427,6 +427,7 @@
 
   function attachStaffListener(staffId, onFirstReady) {
     var ref = staffDocRef(staffId);
+    var settled = false;
     ref.get().then(function (snap) {
       if (!snap.exists) {
         // First time this staff member's phone connects: seed the cloud with
@@ -441,6 +442,7 @@
       }
     });
     activeUnsub = ref.onSnapshot(function (snap) {
+      settled = true;
       lastFromCache = snap.metadata.fromCache;
       if (snap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
       var d = snap.data() || {};
@@ -452,9 +454,27 @@
       if (firstTime && onFirstReady) onFirstReady();
       else if (UI.role === "staff" && UI.staffSelf === staffId) renderStaffMode();
     }, function (err) {
+      settled = true;
       toast("同期エラー：" + err.message);
       if (!dataReady) showLoadError("データの読み込みでエラーが発生しました。（エラー内容：" + err.code + " " + err.message + "）このメッセージのスクリーンショットを送ってください。");
     });
+    // The realtime connection can be blocked by some networks even when plain
+    // HTTPS works fine. If it hasn't responded shortly, fall back to a
+    // one-time fetch so the user isn't stuck (updates from other devices
+    // just won't appear live until the app is reopened in that case).
+    setTimeout(function () {
+      if (settled || dataReady) return;
+      ref.get().then(function (snap) {
+        if (settled || dataReady) return;
+        var d = (snap.exists ? snap.data() : {}) || {};
+        DATA.records[staffId] = d.records || {};
+        DATA.goals[staffId] = Object.assign(emptyGoalsFor(staffId), d.goals || {});
+        lastFromCache = false;
+        dataReady = true;
+        updateSyncStatus();
+        if (onFirstReady) onFirstReady();
+      }).catch(function () {});
+    }, 5000);
   }
 
   function attachManagerListener(onFirstReady) {
@@ -477,7 +497,9 @@
         });
       }
     }
+    var settled = false;
     activeUnsub = col.onSnapshot(function (querySnap) {
+      settled = true;
       lastFromCache = querySnap.metadata.fromCache;
       if (querySnap.metadata.hasPendingWrites) { updateSyncStatus(); return; }
       querySnap.forEach(function (doc) {
@@ -493,9 +515,27 @@
       if (firstTime && onFirstReady) onFirstReady();
       else if (UI.role === "manager" && isManagerUnlocked()) renderManagerMode();
     }, function (err) {
+      settled = true;
       toast("同期エラー：" + err.message);
       if (!dataReady) showLoadError("データの読み込みでエラーが発生しました。（エラー内容：" + err.code + " " + err.message + "）このメッセージのスクリーンショットを送ってください。");
     });
+    setTimeout(function () {
+      if (settled || dataReady) return;
+      col.get().then(function (querySnap) {
+        if (settled || dataReady) return;
+        querySnap.forEach(function (doc) {
+          var id = doc.id;
+          if (!staffById(id)) return;
+          var d = doc.data() || {};
+          DATA.records[id] = d.records || {};
+          DATA.goals[id] = Object.assign(emptyGoalsFor(id), d.goals || {});
+        });
+        lastFromCache = false;
+        dataReady = true;
+        updateSyncStatus();
+        if (onFirstReady) onFirstReady();
+      }).catch(function () {});
+    }, 5000);
   }
 
   /* ---------------- Download / import ---------------- */
@@ -1176,11 +1216,10 @@
     if (typeof firebase === "undefined") throw new Error("Firebaseの読み込みに失敗しました（通信環境をご確認ください）");
     firebase.initializeApp(FIREBASE_CONFIG);
     db = firebase.firestore();
-    try { db.enablePersistence({ synchronizeTabs: true }).catch(function () {}); } catch (e) {}
     render();
     setTimeout(function () {
       if (!dataReady) showLoadError("読み込みに時間がかかりすぎています。電波の良い場所でもう一度お試しください。（エラー内容：タイムアウト）");
-    }, 12000);
+    }, 16000);
   } catch (e) {
     showLoadError("初期化に失敗しました：" + e.message);
   }
