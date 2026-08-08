@@ -864,7 +864,7 @@
   var managerSelectedMonth = null;
   var managerActiveTab = "sheet1";
 
-  function renderManagerMode() {
+  function renderManagerMode(focusPanel) {
     if (!isManagerUnlocked()) { promptPin(); $("#main").innerHTML = ""; return; }
     var main = $("#main");
     main.innerHTML = "";
@@ -887,7 +887,7 @@
     var dash = el("div", { class: "dash-grid" });
     STAFF.forEach(function (s) {
       var status = recordStatus(s.id, month);
-      var card = el("div", { class: "dash-card", onclick: function () { managerSelectedStaff = s.id; managerActiveTab = "sheet1"; renderManagerMode(); } }, [
+      var card = el("div", { class: "dash-card", onclick: function () { managerSelectedStaff = s.id; managerActiveTab = "sheet1"; renderManagerMode(true); } }, [
         el("div", { class: "who" }, [s.name]),
         el("div", { class: "role" }, [s.position]),
         statusChip(status)
@@ -901,15 +901,15 @@
     var staff = staffById(staffId);
 
     var tabs = el("div", { class: "staff-tabs" }, STAFF.map(function (s) {
-      return el("button", { class: s.id === staffId ? "active" : "", onclick: function () { managerSelectedStaff = s.id; renderManagerMode(); } }, [s.name]);
+      return el("button", { class: s.id === staffId ? "active" : "", onclick: function () { managerSelectedStaff = s.id; renderManagerMode(true); } }, [s.name]);
     }));
     main.appendChild(tabs);
 
     var subtabs = el("div", { class: "subtabs" }, [
-      el("button", { class: managerActiveTab === "sheet1" ? "active" : "", onclick: function () { managerActiveTab = "sheet1"; renderManagerMode(); } }, ["①本人記入"]),
-      el("button", { class: managerActiveTab === "sheet2" ? "active" : "", onclick: function () { managerActiveTab = "sheet2"; renderManagerMode(); } }, ["②面談記録"]),
-      el("button", { class: managerActiveTab === "sheet3" ? "active" : "", onclick: function () { managerActiveTab = "sheet3"; renderManagerMode(); } }, ["③目標管理"]),
-      el("button", { class: managerActiveTab === "history" ? "active" : "", onclick: function () { managerActiveTab = "history"; renderManagerMode(); } }, ["履歴"])
+      el("button", { class: managerActiveTab === "sheet1" ? "active" : "", onclick: function () { managerActiveTab = "sheet1"; renderManagerMode(true); } }, ["①本人記入"]),
+      el("button", { class: managerActiveTab === "sheet2" ? "active" : "", onclick: function () { managerActiveTab = "sheet2"; renderManagerMode(true); } }, ["②面談記録"]),
+      el("button", { class: managerActiveTab === "sheet3" ? "active" : "", onclick: function () { managerActiveTab = "sheet3"; renderManagerMode(true); } }, ["③目標管理"]),
+      el("button", { class: managerActiveTab === "history" ? "active" : "", onclick: function () { managerActiveTab = "history"; renderManagerMode(true); } }, ["履歴"])
     ]);
     main.appendChild(subtabs);
 
@@ -920,6 +920,10 @@
     else if (managerActiveTab === "sheet2") renderMgrSheet2(panel, staffId, month);
     else if (managerActiveTab === "sheet3") renderMgrSheet3(panel, staffId, month);
     else renderMgrHistory(panel, staffId);
+
+    if (focusPanel) {
+      setTimeout(function () { panel.scrollIntoView({ behavior: "smooth", block: "start" }); }, 30);
+    }
   }
 
   function renderMgrSheet1(panel, staffId, month) {
@@ -1111,7 +1115,7 @@
       var row = el("div", { class: "btn-row", style: "justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)" }, [
         el("div", {}, [el("strong", {}, [monthLabel(m)])]),
         statusChip(status),
-        el("button", { class: "btn sm", onclick: function () { managerSelectedMonth = m; managerActiveTab = "sheet1"; renderManagerMode(); } }, ["開く"])
+        el("button", { class: "btn sm", onclick: function () { managerSelectedMonth = m; managerActiveTab = "sheet1"; renderManagerMode(true); } }, ["開く"])
       ]);
       body.appendChild(row);
     });
