@@ -365,7 +365,11 @@
       else if (k.slice(0, 2) === "on") e.addEventListener(k.slice(2), attrs[k]);
       else e.setAttribute(k, attrs[k]);
     });
-    (children || []).forEach(function (c) { if (c) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    (children || []).forEach(function (c) {
+      if (c === null || c === undefined || c === false || c === "") return;
+      // Numbers (e.g. a saved motivation score) would throw if appended as-is.
+      e.appendChild(typeof c === "object" ? c : document.createTextNode(String(c)));
+    });
     return e;
   }
   function staffById(id) { return STAFF.filter(function (s) { return s.id === id; })[0]; }
@@ -945,7 +949,10 @@
         ["中期目標", s1.d_midgoal], ["相談したいこと", s1.d_consult]
       ];
       rows.forEach(function (r) {
-        body.appendChild(el("div", { class: "field" }, [el("label", {}, [r[0]]), el("div", { class: "readonly-block" }, [r[1] || "（未記入）"])]));
+        // Numeric answers (e.g. the 1-10 motivation score) are stored as numbers,
+        // which el() cannot append directly, so normalize every value to a string.
+        var v = (r[1] === null || r[1] === undefined || r[1] === "") ? "（未記入）" : String(r[1]);
+        body.appendChild(el("div", { class: "field" }, [el("label", {}, [r[0]]), el("div", { class: "readonly-block" }, [v])]));
       });
       if (s1.submittedAt) body.appendChild(el("div", { class: "hint" }, ["提出日時: " + new Date(s1.submittedAt).toLocaleString("ja-JP")]));
     }
